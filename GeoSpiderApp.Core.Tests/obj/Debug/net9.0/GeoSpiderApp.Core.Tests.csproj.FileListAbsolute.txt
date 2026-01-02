@@ -100,3 +100,8 @@
 /home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/obj/Debug/net9.0/GeoSpiderApp.Core.Tests.pdb
 /home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/obj/Debug/net9.0/GeoSpiderApp.Core.Tests.genruntimeconfig.cache
 /home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/obj/Debug/net9.0/ref/GeoSpiderApp.Core.Tests.dll
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Debug/net9.0/Castle.Core.dll
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Debug/net9.0/Moq.dll
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Debug/net9.0/System.Diagnostics.EventLog.dll
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Debug/net9.0/runtimes/win/lib/net6.0/System.Diagnostics.EventLog.Messages.dll
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Debug/net9.0/runtimes/win/lib/net6.0/System.Diagnostics.EventLog.dll

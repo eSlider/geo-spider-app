@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GeoSpiderApp.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f197c2fdcb23176bddd4223cedca411cb4551edd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+73c9fc176e1aca26c3edc715318a3fd634ba54a8")]
 [assembly: System.Reflection.AssemblyProductAttribute("GeoSpiderApp.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GeoSpiderApp.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
