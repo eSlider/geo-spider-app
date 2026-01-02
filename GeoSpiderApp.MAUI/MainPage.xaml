@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GeoSpiderApp.MAUI.MainPage"
+             Title="Geo Spider">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+            <!-- Title -->
+            <Label
+                Text="🕷️ Geo Spider"
+                FontSize="32"
+                HorizontalOptions="Center"
+                FontAttributes="Bold" />
+
+            <Label
+                Text="GPS Location Collection App"
+                FontSize="18"
+                HorizontalOptions="Center"
+                TextColor="Gray" />
+
+            <!-- Status Section -->
+            <Frame BackgroundColor="LightGray" Padding="20" CornerRadius="10">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Status" FontSize="20" FontAttributes="Bold" />
+
+                    <HorizontalStackLayout>
+                        <Label Text="Service Status:" FontSize="16" />
+                        <Label x:Name="ServiceStatusLabel" Text="Stopped" FontSize="16" TextColor="Red" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <Label Text="Data Points:" FontSize="16" />
+                        <Label x:Name="DataCountLabel" Text="0" FontSize="16" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <Label Text="Network:" FontSize="16" />
+                        <Label x:Name="NetworkStatusLabel" Text="Online" FontSize="16" TextColor="Green" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Controls -->
+            <Button
+                x:Name="StartButton"
+                Text="Start Location Service"
+                FontSize="18"
+                BackgroundColor="Green"
+                TextColor="White"
+                Clicked="OnStartClicked"
+                HorizontalOptions="Fill" />
+
+            <Button
+                x:Name="StopButton"
+                Text="Stop Location Service"
+                FontSize="18"
+                BackgroundColor="Red"
+                TextColor="White"
+                Clicked="OnStopClicked"
+                HorizontalOptions="Fill"
+                IsEnabled="False" />
+
+            <Button
+                x:Name="SyncButton"
+                Text="Sync Data Now"
+                FontSize="18"
+                BackgroundColor="Blue"
+                TextColor="White"
+                Clicked="OnSyncClicked"
+                HorizontalOptions="Fill" />
+
+            <!-- Configuration -->
+            <Frame BackgroundColor="LightBlue" Padding="20" CornerRadius="10">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Configuration" FontSize="20" FontAttributes="Bold" />
+
+                    <HorizontalStackLayout>
+                        <Label Text="Collection Interval:" FontSize="14" />
+                        <Label x:Name="IntervalLabel" Text="30 seconds" FontSize="14" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <Label Text="Server URL:" FontSize="14" />
+                        <Label x:Name="ServerLabel" Text="api.example.com" FontSize="14" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <Label Text="Batch Size:" FontSize="14" />
+                        <Label x:Name="BatchSizeLabel" Text="100" FontSize="14" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

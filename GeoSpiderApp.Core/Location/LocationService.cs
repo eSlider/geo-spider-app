@@ -3,7 +3,7 @@ namespace GeoSpiderApp.Core.Location;
 /// <summary>
 /// Service for managing location data collection
 /// </summary>
-public class LocationService
+public class LocationService : ILocationService
 {
     private readonly ILocationProvider _locationProvider;
 

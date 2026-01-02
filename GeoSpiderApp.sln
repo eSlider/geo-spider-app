@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoSpiderApp.Core", "GeoSpi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoSpiderApp.Core.Tests", "GeoSpiderApp.Core.Tests\GeoSpiderApp.Core.Tests.csproj", "{8DE08156-2A42-4805-B6EE-2D944ECD677D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoSpiderApp.MAUI", "GeoSpiderApp.MAUI\GeoSpiderApp.MAUI.csproj", "{7DFBC624-3C9B-48C8-9774-08D6722A6BFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoSpiderConsole", "GeoSpiderConsole\GeoSpiderConsole.csproj", "{A0C59097-5057-4BB8-9970-0B635C79FD75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{8DE08156-2A42-4805-B6EE-2D944ECD677D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DE08156-2A42-4805-B6EE-2D944ECD677D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DE08156-2A42-4805-B6EE-2D944ECD677D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DFBC624-3C9B-48C8-9774-08D6722A6BFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DFBC624-3C9B-48C8-9774-08D6722A6BFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DFBC624-3C9B-48C8-9774-08D6722A6BFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DFBC624-3C9B-48C8-9774-08D6722A6BFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0C59097-5057-4BB8-9970-0B635C79FD75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0C59097-5057-4BB8-9970-0B635C79FD75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0C59097-5057-4BB8-9970-0B635C79FD75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0C59097-5057-4BB8-9970-0B635C79FD75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
