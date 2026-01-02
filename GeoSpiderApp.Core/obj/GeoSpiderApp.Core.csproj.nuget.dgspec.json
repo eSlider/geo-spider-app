@@ -1,0 +1,74 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/GeoSpiderApp.Core.csproj": {}
+  },
+  "projects": {
+    "/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/GeoSpiderApp.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/GeoSpiderApp.Core.csproj",
+        "projectName": "GeoSpiderApp.Core",
+        "projectPath": "/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/GeoSpiderApp.Core.csproj",
+        "packagesPath": "/home/ano/.nuget/packages/",
+        "outputPath": "/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/ano/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "/usr/lib/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "YamlDotNet": {
+              "target": "Package",
+              "version": "[16.3.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.111/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

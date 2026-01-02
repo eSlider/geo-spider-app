@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "kwjJqx3BbBE=",
+  "success": true,
+  "projectFilePath": "/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/GeoSpiderApp.Core.csproj",
+  "expectedPackageFiles": [
+    "/home/ano/.nuget/packages/yamldotnet/16.3.0/yamldotnet.16.3.0.nupkg.sha512"
+  ],
+  "logs": []
+}
