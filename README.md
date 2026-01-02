@@ -35,20 +35,7 @@ A sophisticated GPS/GLONASS location tracking Android application built with .NE
 - Production code: Enterprise-grade architecture and testing
 - Integration guides: Step-by-step MAUI setup instructions
 
-## Table of Contents
 
-- [Features](#features)
-- [Architecture](#architecture)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [Testing](#testing)
-- [Building](#building)
-- [Deployment](#deployment)
-- [API](#api)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -424,5 +411,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 - Issues: [GitHub Issues](https://github.com/eSlider/geo-spider-app/issues)
-- Discussions: [GitHub Discussions](https://github.com/eSlider/geo-spider-app/discussions)
 - Documentation: [MAUI Documentation](https://learn.microsoft.com/en-us/dotnet/maui/)
