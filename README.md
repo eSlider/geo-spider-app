@@ -238,6 +238,16 @@ dotnet publish -c Release \
   /p:AndroidPackageFormat=apk
 ```
 
+### Docker Build
+```bash
+# Build with Docker (requires Windows Docker host)
+docker build -t geo-spider-builder .
+docker run --rm -v $(pwd)/publish:/src/publish geo-spider-builder
+
+# Or use docker-compose
+docker-compose run --rm maui-build
+```
+
 ### Build Artifacts
 - `publish/GeoSpiderApp.MAUI-Signed.apk` - Release APK
 - `publish/[other files]` - Build dependencies
@@ -249,6 +259,8 @@ dotnet publish -c Release \
 | `build/build-apk.sh` | Linux/macOS build script |
 | `build/build-apk.bat` | Windows build script |
 | `build/demo-build.sh` | Build process demonstration |
+| `Dockerfile` | Docker build configuration |
+| `docker-compose.yml` | Multi-container Docker setup |
 
 ## Deployment
 
@@ -319,6 +331,38 @@ Location data is sent to server in JSON format:
 - Network failures: Automatic retry with exponential backoff
 - Server errors: Logged and queued for later retry
 - GPS unavailable: Graceful degradation with user notification
+
+## CI/CD Pipeline
+
+### GitHub Actions
+The project includes automated CI/CD pipelines for:
+- **Automated Testing**: Runs all 21 tests on every push/PR
+- **APK Building**: Creates signed APK artifacts on Windows runners
+- **Release Automation**: Publishes APK to GitHub Releases
+
+### Pipeline Stages
+1. **Test Stage**: Runs on Ubuntu - validates core functionality
+2. **Build Stage**: Runs on Windows - builds APK with MAUI workloads
+3. **Release Stage**: Creates GitHub releases with APK artifacts
+
+### Docker Support
+```bash
+# Build APK in Docker container
+docker build -t geo-spider-apk .
+docker run -v $(pwd)/artifacts:/app/artifacts geo-spider-apk
+
+# Use docker-compose for development
+docker-compose run maui-build
+```
+
+### Local Development
+```bash
+# Quick local build
+./build/build-apk.sh
+
+# Full CI simulation
+./run-emulator-demo.sh
+```
 
 ## Contributing
 

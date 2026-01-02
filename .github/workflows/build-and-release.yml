@@ -1,0 +1,95 @@
+name: Build and Release APK
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [published]
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Run tests
+      run: dotnet test --configuration Release --logger "trx;LogFileName=test-results.trx"
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: "**/test-results.trx"
+
+  build-apk:
+    name: Build APK
+    runs-on: windows-latest
+    needs: test
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Install MAUI workloads
+      run: |
+        dotnet workload install maui android --skip-manifest-update
+        dotnet workload list
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build APK
+      run: |
+        dotnet publish GeoSpiderApp.MAUI/GeoSpiderApp.MAUI.csproj `
+          -c Release `
+          -f net9.0-android `
+          --self-contained `
+          -p:AndroidPackageFormat=apk `
+          -o ./publish
+
+    - name: List build artifacts
+      run: Get-ChildItem -Path ./publish -Recurse
+
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: geo-spider-apk
+        path: ./publish/GeoSpiderApp.MAUI-Signed.apk
+        retention-days: 30
+
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: build-apk
+    if: github.event_name == 'release'
+
+    steps:
+    - name: Download APK artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: geo-spider-apk
+
+    - name: Upload APK to Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: GeoSpiderApp.MAUI-Signed.apk
+        token: ${{ secrets.GITHUB_TOKEN }}

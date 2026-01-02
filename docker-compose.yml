@@ -1,0 +1,21 @@
+# Geo Spider App - Docker Compose for MAUI Development
+# Note: Requires Windows Docker host for MAUI workloads
+
+version: '3.8'
+
+services:
+  maui-build:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: windows
+    volumes:
+      - ./publish:/src/publish
+    command: dotnet publish GeoSpiderApp.MAUI/GeoSpiderApp.MAUI.csproj -c Release -f net9.0-android -p:AndroidPackageFormat=apk -o ./publish
+
+  test-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: windows
+    command: dotnet test --configuration Release --logger "trx;LogFileName=test-results.trx"
