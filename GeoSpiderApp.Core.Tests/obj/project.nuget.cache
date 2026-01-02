@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "P8KARxa4tP0=",
+  "dgSpecHash": "yitp+bdy0IY=",
   "success": true,
   "projectFilePath": "/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/GeoSpiderApp.Core.Tests.csproj",
   "expectedPackageFiles": [
@@ -18,7 +18,8 @@
     "/home/ano/.nuget/packages/xunit.core/2.9.2/xunit.core.2.9.2.nupkg.sha512",
     "/home/ano/.nuget/packages/xunit.extensibility.core/2.9.2/xunit.extensibility.core.2.9.2.nupkg.sha512",
     "/home/ano/.nuget/packages/xunit.extensibility.execution/2.9.2/xunit.extensibility.execution.2.9.2.nupkg.sha512",
-    "/home/ano/.nuget/packages/xunit.runner.visualstudio/2.8.2/xunit.runner.visualstudio.2.8.2.nupkg.sha512"
+    "/home/ano/.nuget/packages/xunit.runner.visualstudio/2.8.2/xunit.runner.visualstudio.2.8.2.nupkg.sha512",
+    "/home/ano/.nuget/packages/yamldotnet/16.3.0/yamldotnet.16.3.0.nupkg.sha512"
   ],
   "logs": []
 }

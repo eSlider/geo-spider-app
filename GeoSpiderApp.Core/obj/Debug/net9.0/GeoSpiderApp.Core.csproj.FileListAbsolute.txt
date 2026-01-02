@@ -1,0 +1,12 @@
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/bin/Debug/net9.0/GeoSpiderApp.Core.deps.json
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/bin/Debug/net9.0/GeoSpiderApp.Core.dll
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/bin/Debug/net9.0/GeoSpiderApp.Core.pdb
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/obj/Debug/net9.0/GeoSpiderApp.Core.csproj.AssemblyReference.cache
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/obj/Debug/net9.0/GeoSpiderApp.Core.GeneratedMSBuildEditorConfig.editorconfig
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/obj/Debug/net9.0/GeoSpiderApp.Core.AssemblyInfoInputs.cache
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/obj/Debug/net9.0/GeoSpiderApp.Core.AssemblyInfo.cs
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/obj/Debug/net9.0/GeoSpiderApp.Core.csproj.CoreCompileInputs.cache
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/obj/Debug/net9.0/GeoSpiderApp.Core.dll
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/obj/Debug/net9.0/refint/GeoSpiderApp.Core.dll
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/obj/Debug/net9.0/GeoSpiderApp.Core.pdb
+/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/obj/Debug/net9.0/ref/GeoSpiderApp.Core.dll

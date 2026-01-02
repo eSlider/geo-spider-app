@@ -411,6 +411,32 @@
         "build": {
           "build/net6.0/xunit.runner.visualstudio.props": {}
         }
+      },
+      "YamlDotNet/16.3.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/YamlDotNet.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/YamlDotNet.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "GeoSpiderApp.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "YamlDotNet": "16.3.0"
+        },
+        "compile": {
+          "bin/placeholder/GeoSpiderApp.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/GeoSpiderApp.Core.dll": {}
+        }
       }
     }
   },
@@ -932,10 +958,39 @@
         "xunit.runner.visualstudio.2.8.2.nupkg.sha512",
         "xunit.runner.visualstudio.nuspec"
       ]
+    },
+    "YamlDotNet/16.3.0": {
+      "sha512": "SgMOdxbz8X65z8hraIs6hOEdnkH6hESTAIUa7viEngHOYaH+6q5XJmwr1+yb9vJpNQ19hCQY69xbFsLtXpobQA==",
+      "type": "package",
+      "path": "yamldotnet/16.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "images/yamldotnet.png",
+        "lib/net47/YamlDotNet.dll",
+        "lib/net47/YamlDotNet.xml",
+        "lib/net6.0/YamlDotNet.dll",
+        "lib/net6.0/YamlDotNet.xml",
+        "lib/net8.0/YamlDotNet.dll",
+        "lib/net8.0/YamlDotNet.xml",
+        "lib/netstandard2.0/YamlDotNet.dll",
+        "lib/netstandard2.0/YamlDotNet.xml",
+        "lib/netstandard2.1/YamlDotNet.dll",
+        "lib/netstandard2.1/YamlDotNet.xml",
+        "yamldotnet.16.3.0.nupkg.sha512",
+        "yamldotnet.nuspec"
+      ]
+    },
+    "GeoSpiderApp.Core/1.0.0": {
+      "type": "project",
+      "path": "../GeoSpiderApp.Core/GeoSpiderApp.Core.csproj",
+      "msbuildProject": "../GeoSpiderApp.Core/GeoSpiderApp.Core.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net9.0": [
+      "GeoSpiderApp.Core >= 1.0.0",
       "Microsoft.NET.Test.Sdk >= 17.12.0",
       "coverlet.collector >= 6.0.2",
       "xunit >= 2.9.2",
@@ -967,7 +1022,11 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/GeoSpiderApp.Core.csproj": {
+              "projectPath": "/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core/GeoSpiderApp.Core.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

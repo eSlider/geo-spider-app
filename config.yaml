@@ -1,0 +1,4 @@
+serverUrl: https://api.example.com/locations
+collectionIntervalSeconds: 30
+syncBatchSize: 100
+maxOfflineStorageDays: 7
