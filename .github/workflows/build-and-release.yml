@@ -20,7 +20,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '9.0.x'
+        dotnet-version: '8.0.x'
 
     - name: Restore dependencies
       run: dotnet restore GeoSpiderApp.Core.Tests/
@@ -47,7 +47,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '9.0.x'
+        dotnet-version: '8.0.x'
 
     - name: Install MAUI workloads
       run: |
@@ -64,13 +64,13 @@ jobs:
 
     - name: Build MAUI project
       run: |
-        dotnet build GeoSpiderApp.MAUI/GeoSpiderApp.MAUI.csproj -c Release -f net9.0-android
+        dotnet build GeoSpiderApp.MAUI/GeoSpiderApp.MAUI.csproj -c Release -f net8.0-android
 
     - name: Build APK
       run: |
         dotnet publish GeoSpiderApp.MAUI/GeoSpiderApp.MAUI.csproj `
           -c Release `
-          -f net9.0-android `
+          -f net8.0-android `
           -r android-arm64-v8a `
           --self-contained `
           -p:AndroidPackageFormat=apk `

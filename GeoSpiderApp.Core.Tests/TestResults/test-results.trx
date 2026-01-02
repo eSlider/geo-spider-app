@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="dd952699-d485-4552-a950-ce4569128dbb" name="@anoga 2026-01-02 21:55:16" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-01-02T21:55:16.4341504+00:00" queuing="2026-01-02T21:55:16.4341504+00:00" start="2026-01-02T21:55:15.4986828+00:00" finish="2026-01-02T21:55:20.5716754+00:00" />
+  <TestSettings name="default" id="95745877-ea5b-47af-91dc-8c951063a163">
+    <Deployment runDeploymentRoot="_anoga_2026-01-02_21_55_16" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="f433b555-ddcc-4c36-ad64-87bfe06a9c26" testId="3c8b165c-e226-2a0b-a5c0-11a2c1a93d15" testName="GeoSpiderApp.Core.Tests.LocationServiceTests.GetCurrentLocation_ProviderFails_ThrowsException" computerName="anoga" duration="00:00:00.0037317" startTime="2026-01-02T21:55:16.4377333+00:00" endTime="2026-01-02T21:55:16.4377334+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f433b555-ddcc-4c36-ad64-87bfe06a9c26" />
+    <UnitTestResult executionId="b27a1bfc-c7c9-4640-a59a-a9c6e1273c24" testId="6d84ce13-b522-1673-d8ba-c8050e0d7229" testName="GeoSpiderApp.Core.Tests.LocationDataTests.Validate_InvalidLatitude_ThrowsArgumentOutOfRangeException" computerName="anoga" duration="00:00:00.0003365" startTime="2026-01-02T21:55:16.3388501+00:00" endTime="2026-01-02T21:55:16.3388502+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b27a1bfc-c7c9-4640-a59a-a9c6e1273c24" />
+    <UnitTestResult executionId="47f4f94c-62f2-4211-9e6b-44b91276c01f" testId="08c57d99-a9e9-ff46-cca6-09794e10a024" testName="GeoSpiderApp.Core.Tests.BackgroundServiceTests.LocationCollectionCycle_LocationServiceFails_ContinuesOperation" computerName="anoga" duration="00:00:02.5076589" startTime="2026-01-02T21:55:18.9462192+00:00" endTime="2026-01-02T21:55:18.9462193+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="47f4f94c-62f2-4211-9e6b-44b91276c01f" />
+    <UnitTestResult executionId="ac4d6de7-c020-45b2-bfff-654320e5c824" testId="d4e7205e-0094-f215-8d62-4a81d0696cda" testName="GeoSpiderApp.Core.Tests.BackgroundServiceTests.StartAsync_ValidConfiguration_StartsLocationCollection" computerName="anoga" duration="00:00:00.0012870" startTime="2026-01-02T21:55:16.4371906+00:00" endTime="2026-01-02T21:55:16.4371908+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ac4d6de7-c020-45b2-bfff-654320e5c824" />
+    <UnitTestResult executionId="12345da9-7a30-4caa-904f-7cf7ae11a77c" testId="14f2e646-b1c4-7e13-46e4-4048c17c1efd" testName="GeoSpiderApp.Core.Tests.LocationDataTests.Validate_NegativeAccuracy_ThrowsArgumentOutOfRangeException" computerName="anoga" duration="00:00:00.0003216" startTime="2026-01-02T21:55:16.3394801+00:00" endTime="2026-01-02T21:55:16.3394802+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="12345da9-7a30-4caa-904f-7cf7ae11a77c" />
+    <UnitTestResult executionId="dd1bfdfe-c16e-4985-aa25-d60bf9dafad7" testId="42d58943-6a15-5b69-ed7d-e21f70b8999b" testName="GeoSpiderApp.Core.Tests.ConfigurationTests.LoadConfiguration_InvalidYaml_ThrowsArgumentException" computerName="anoga" duration="00:00:00.0007490" startTime="2026-01-02T21:55:16.4083892+00:00" endTime="2026-01-02T21:55:16.4083893+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dd1bfdfe-c16e-4985-aa25-d60bf9dafad7" />
+    <UnitTestResult executionId="f0d76e12-469d-4d17-b0e3-d121d76b5274" testId="a3631882-43a6-2796-0f67-944563517077" testName="GeoSpiderApp.Core.Tests.DataSyncTests.SyncData_NoStoredData_SkipsSync" computerName="anoga" duration="00:00:00.0017584" startTime="2026-01-02T21:55:16.4454572+00:00" endTime="2026-01-02T21:55:16.4454573+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f0d76e12-469d-4d17-b0e3-d121d76b5274" />
+    <UnitTestResult executionId="5b485521-3a63-4759-97a3-0a9a1bcbfc37" testId="cd1236c8-2f28-dd47-d99d-a1a6c66b11b1" testName="GeoSpiderApp.Core.Tests.LocationDataTests.Validate_NullProvider_ThrowsArgumentException" computerName="anoga" duration="00:00:00.0074103" startTime="2026-01-02T21:55:16.3323294+00:00" endTime="2026-01-02T21:55:16.3323774+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5b485521-3a63-4759-97a3-0a9a1bcbfc37" />
+    <UnitTestResult executionId="607f1be3-6567-477c-a4f0-78fb80cd198a" testId="814cab6f-2fa8-5711-79e6-699a14618998" testName="GeoSpiderApp.Core.Tests.DataSyncTests.SyncData_Offline_SkipsSync" computerName="anoga" duration="00:00:00.1128654" startTime="2026-01-02T21:55:16.4320096+00:00" endTime="2026-01-02T21:55:16.4320097+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="607f1be3-6567-477c-a4f0-78fb80cd198a" />
+    <UnitTestResult executionId="aaacba82-4944-4b6b-ba09-20228237848d" testId="bf4d7f24-4193-6505-1d6e-0865a891ecbb" testName="GeoSpiderApp.Core.Tests.BackgroundServiceTests.StopAsync_RunningService_StopsLocationCollection" computerName="anoga" duration="00:00:00.1083904" startTime="2026-01-02T21:55:16.4333483+00:00" endTime="2026-01-02T21:55:16.4333484+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="aaacba82-4944-4b6b-ba09-20228237848d" />
+    <UnitTestResult executionId="3d7f3432-c42a-4e53-984a-4c7f4234c612" testId="df547514-15e8-0819-02de-1cdc4fa90fe2" testName="GeoSpiderApp.Core.Tests.DataSyncTests.SyncData_ServerError_ReturnsFailure" computerName="anoga" duration="00:00:00.0116451" startTime="2026-01-02T21:55:16.4436525+00:00" endTime="2026-01-02T21:55:16.4436526+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3d7f3432-c42a-4e53-984a-4c7f4234c612" />
+    <UnitTestResult executionId="05811b6d-86fa-4579-9df9-43f0d945df4f" testId="9d9380e4-dc9a-8ec4-bc61-aab2c4b83ff2" testName="GeoSpiderApp.Core.Tests.LocationServiceTests.IsLocationServiceEnabled_ProviderDisabled_ReturnsFalse" computerName="anoga" duration="00:00:00.1018588" startTime="2026-01-02T21:55:16.4210299+00:00" endTime="2026-01-02T21:55:16.4210300+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="05811b6d-86fa-4579-9df9-43f0d945df4f" />
+    <UnitTestResult executionId="e0701692-1eaa-4c28-bd40-b633482fd980" testId="8a7c80be-4b54-090d-af52-10f92e6d22fb" testName="GeoSpiderApp.Core.Tests.LocationDataTests.Validate_InvalidLongitude_ThrowsArgumentOutOfRangeException" computerName="anoga" duration="00:00:00.0003140" startTime="2026-01-02T21:55:16.3793047+00:00" endTime="2026-01-02T21:55:16.3793047+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e0701692-1eaa-4c28-bd40-b633482fd980" />
+    <UnitTestResult executionId="a3b1c7ce-c934-4a90-93dc-09837491b725" testId="ef8ce39d-ab8e-3386-819f-998f0c8ca6c0" testName="GeoSpiderApp.Core.Tests.LocationServiceTests.IsLocationServiceEnabled_ProviderEnabled_ReturnsTrue" computerName="anoga" duration="00:00:00.0003852" startTime="2026-01-02T21:55:16.4381789+00:00" endTime="2026-01-02T21:55:16.4381790+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a3b1c7ce-c934-4a90-93dc-09837491b725" />
+    <UnitTestResult executionId="289d96e1-49ab-4e49-a80f-ed9f9734412a" testId="4644cda6-75e5-95dc-6371-a0c8f3e90da5" testName="GeoSpiderApp.Core.Tests.ConfigurationTests.LoadConfiguration_ValidYaml_ReturnsConfiguration" computerName="anoga" duration="00:00:00.0053238" startTime="2026-01-02T21:55:16.4137864+00:00" endTime="2026-01-02T21:55:16.4137865+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="289d96e1-49ab-4e49-a80f-ed9f9734412a" />
+    <UnitTestResult executionId="baeb71f6-9a14-40df-80fc-56a86c94a939" testId="fee1563b-0ed1-853a-b9e0-313545c57411" testName="GeoSpiderApp.Core.Tests.LocationServiceTests.GetCurrentLocation_ValidLocation_ReturnsLocationData" computerName="anoga" duration="00:00:00.0129301" startTime="2026-01-02T21:55:16.4340411+00:00" endTime="2026-01-02T21:55:16.4340412+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="baeb71f6-9a14-40df-80fc-56a86c94a939" />
+    <UnitTestResult executionId="916e6912-7ccb-4dbd-a4bd-7c7173d74d5a" testId="bbfa55b4-b72f-08f1-939a-a8e673f6e8f8" testName="GeoSpiderApp.Core.Tests.BackgroundServiceTests.LocationCollectionCycle_ValidLocation_StoresData" computerName="anoga" duration="00:00:01.5173710" startTime="2026-01-02T21:55:20.4648312+00:00" endTime="2026-01-02T21:55:20.4648313+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="916e6912-7ccb-4dbd-a4bd-7c7173d74d5a" />
+    <UnitTestResult executionId="a3d73faa-de24-40fe-be32-8332ccf4ed1e" testId="d7458eff-d430-c170-994a-2dc4bcc8ce8c" testName="GeoSpiderApp.Core.Tests.ConfigurationTests.LoadConfiguration_MissingRequiredField_ThrowsArgumentException" computerName="anoga" duration="00:00:00.0883105" startTime="2026-01-02T21:55:16.4075816+00:00" endTime="2026-01-02T21:55:16.4075817+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a3d73faa-de24-40fe-be32-8332ccf4ed1e" />
+    <UnitTestResult executionId="516d8013-6ab0-4b50-a783-cc898de8baf2" testId="88b86e64-160b-92f3-0c43-091ca7547c36" testName="GeoSpiderApp.Core.Tests.LocationDataTests.Validate_EmptyProvider_ThrowsArgumentException" computerName="anoga" duration="00:00:00.0003462" startTime="2026-01-02T21:55:16.3394148+00:00" endTime="2026-01-02T21:55:16.3394149+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="516d8013-6ab0-4b50-a783-cc898de8baf2" />
+    <UnitTestResult executionId="3f0ced4c-5598-4c4a-9340-7f478b52bed5" testId="0b937c3f-4ff8-ec0c-49c4-5729e753438b" testName="GeoSpiderApp.Core.Tests.DataSyncTests.SyncData_OnlineWithData_SyncsAndRemovesData" computerName="anoga" duration="00:00:00.0041586" startTime="2026-01-02T21:55:16.4496875+00:00" endTime="2026-01-02T21:55:16.4496876+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3f0ced4c-5598-4c4a-9340-7f478b52bed5" />
+    <UnitTestResult executionId="72bc3e30-6833-403b-8176-75297b8ad030" testId="8a0a1364-154c-f6d4-5cfb-268068010cbe" testName="GeoSpiderApp.Core.Tests.LocationDataTests.Validate_ValidLocationData_NoExceptionThrown" computerName="anoga" duration="00:00:00.0005271" startTime="2026-01-02T21:55:16.3393533+00:00" endTime="2026-01-02T21:55:16.3393534+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="72bc3e30-6833-403b-8176-75297b8ad030" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="GeoSpiderApp.Core.Tests.LocationServiceTests.GetCurrentLocation_ProviderFails_ThrowsException" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="3c8b165c-e226-2a0b-a5c0-11a2c1a93d15">
+      <Execution id="f433b555-ddcc-4c36-ad64-87bfe06a9c26" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.LocationServiceTests" name="GetCurrentLocation_ProviderFails_ThrowsException" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.ConfigurationTests.LoadConfiguration_ValidYaml_ReturnsConfiguration" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="4644cda6-75e5-95dc-6371-a0c8f3e90da5">
+      <Execution id="289d96e1-49ab-4e49-a80f-ed9f9734412a" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.ConfigurationTests" name="LoadConfiguration_ValidYaml_ReturnsConfiguration" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.DataSyncTests.SyncData_Offline_SkipsSync" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="814cab6f-2fa8-5711-79e6-699a14618998">
+      <Execution id="607f1be3-6567-477c-a4f0-78fb80cd198a" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.DataSyncTests" name="SyncData_Offline_SkipsSync" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.ConfigurationTests.LoadConfiguration_MissingRequiredField_ThrowsArgumentException" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="d7458eff-d430-c170-994a-2dc4bcc8ce8c">
+      <Execution id="a3d73faa-de24-40fe-be32-8332ccf4ed1e" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.ConfigurationTests" name="LoadConfiguration_MissingRequiredField_ThrowsArgumentException" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.LocationServiceTests.IsLocationServiceEnabled_ProviderDisabled_ReturnsFalse" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="9d9380e4-dc9a-8ec4-bc61-aab2c4b83ff2">
+      <Execution id="05811b6d-86fa-4579-9df9-43f0d945df4f" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.LocationServiceTests" name="IsLocationServiceEnabled_ProviderDisabled_ReturnsFalse" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.LocationDataTests.Validate_NegativeAccuracy_ThrowsArgumentOutOfRangeException" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="14f2e646-b1c4-7e13-46e4-4048c17c1efd">
+      <Execution id="12345da9-7a30-4caa-904f-7cf7ae11a77c" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.LocationDataTests" name="Validate_NegativeAccuracy_ThrowsArgumentOutOfRangeException" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.LocationServiceTests.IsLocationServiceEnabled_ProviderEnabled_ReturnsTrue" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="ef8ce39d-ab8e-3386-819f-998f0c8ca6c0">
+      <Execution id="a3b1c7ce-c934-4a90-93dc-09837491b725" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.LocationServiceTests" name="IsLocationServiceEnabled_ProviderEnabled_ReturnsTrue" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.BackgroundServiceTests.StopAsync_RunningService_StopsLocationCollection" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="bf4d7f24-4193-6505-1d6e-0865a891ecbb">
+      <Execution id="aaacba82-4944-4b6b-ba09-20228237848d" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.BackgroundServiceTests" name="StopAsync_RunningService_StopsLocationCollection" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.ConfigurationTests.LoadConfiguration_InvalidYaml_ThrowsArgumentException" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="42d58943-6a15-5b69-ed7d-e21f70b8999b">
+      <Execution id="dd1bfdfe-c16e-4985-aa25-d60bf9dafad7" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.ConfigurationTests" name="LoadConfiguration_InvalidYaml_ThrowsArgumentException" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.BackgroundServiceTests.StartAsync_ValidConfiguration_StartsLocationCollection" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="d4e7205e-0094-f215-8d62-4a81d0696cda">
+      <Execution id="ac4d6de7-c020-45b2-bfff-654320e5c824" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.BackgroundServiceTests" name="StartAsync_ValidConfiguration_StartsLocationCollection" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.BackgroundServiceTests.LocationCollectionCycle_LocationServiceFails_ContinuesOperation" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="08c57d99-a9e9-ff46-cca6-09794e10a024">
+      <Execution id="47f4f94c-62f2-4211-9e6b-44b91276c01f" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.BackgroundServiceTests" name="LocationCollectionCycle_LocationServiceFails_ContinuesOperation" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.DataSyncTests.SyncData_ServerError_ReturnsFailure" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="df547514-15e8-0819-02de-1cdc4fa90fe2">
+      <Execution id="3d7f3432-c42a-4e53-984a-4c7f4234c612" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.DataSyncTests" name="SyncData_ServerError_ReturnsFailure" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.BackgroundServiceTests.LocationCollectionCycle_ValidLocation_StoresData" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="bbfa55b4-b72f-08f1-939a-a8e673f6e8f8">
+      <Execution id="916e6912-7ccb-4dbd-a4bd-7c7173d74d5a" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.BackgroundServiceTests" name="LocationCollectionCycle_ValidLocation_StoresData" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.DataSyncTests.SyncData_NoStoredData_SkipsSync" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="a3631882-43a6-2796-0f67-944563517077">
+      <Execution id="f0d76e12-469d-4d17-b0e3-d121d76b5274" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.DataSyncTests" name="SyncData_NoStoredData_SkipsSync" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.LocationDataTests.Validate_ValidLocationData_NoExceptionThrown" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="8a0a1364-154c-f6d4-5cfb-268068010cbe">
+      <Execution id="72bc3e30-6833-403b-8176-75297b8ad030" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.LocationDataTests" name="Validate_ValidLocationData_NoExceptionThrown" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.LocationServiceTests.GetCurrentLocation_ValidLocation_ReturnsLocationData" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="fee1563b-0ed1-853a-b9e0-313545c57411">
+      <Execution id="baeb71f6-9a14-40df-80fc-56a86c94a939" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.LocationServiceTests" name="GetCurrentLocation_ValidLocation_ReturnsLocationData" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.LocationDataTests.Validate_EmptyProvider_ThrowsArgumentException" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="88b86e64-160b-92f3-0c43-091ca7547c36">
+      <Execution id="516d8013-6ab0-4b50-a783-cc898de8baf2" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.LocationDataTests" name="Validate_EmptyProvider_ThrowsArgumentException" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.LocationDataTests.Validate_InvalidLongitude_ThrowsArgumentOutOfRangeException" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="8a7c80be-4b54-090d-af52-10f92e6d22fb">
+      <Execution id="e0701692-1eaa-4c28-bd40-b633482fd980" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.LocationDataTests" name="Validate_InvalidLongitude_ThrowsArgumentOutOfRangeException" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.LocationDataTests.Validate_InvalidLatitude_ThrowsArgumentOutOfRangeException" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="6d84ce13-b522-1673-d8ba-c8050e0d7229">
+      <Execution id="b27a1bfc-c7c9-4640-a59a-a9c6e1273c24" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.LocationDataTests" name="Validate_InvalidLatitude_ThrowsArgumentOutOfRangeException" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.LocationDataTests.Validate_NullProvider_ThrowsArgumentException" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="cd1236c8-2f28-dd47-d99d-a1a6c66b11b1">
+      <Execution id="5b485521-3a63-4759-97a3-0a9a1bcbfc37" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.LocationDataTests" name="Validate_NullProvider_ThrowsArgumentException" />
+    </UnitTest>
+    <UnitTest name="GeoSpiderApp.Core.Tests.DataSyncTests.SyncData_OnlineWithData_SyncsAndRemovesData" storage="/home/ano/projects/experiments/maui-geo-spyder/geospiderapp.core.tests/bin/release/net9.0/geospiderapp.core.tests.dll" id="0b937c3f-4ff8-ec0c-49c4-5729e753438b">
+      <Execution id="3f0ced4c-5598-4c4a-9340-7f478b52bed5" />
+      <TestMethod codeBase="/home/ano/projects/experiments/maui-geo-spyder/GeoSpiderApp.Core.Tests/bin/Release/net9.0/GeoSpiderApp.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="GeoSpiderApp.Core.Tests.DataSyncTests" name="SyncData_OnlineWithData_SyncsAndRemovesData" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="3c8b165c-e226-2a0b-a5c0-11a2c1a93d15" executionId="f433b555-ddcc-4c36-ad64-87bfe06a9c26" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6d84ce13-b522-1673-d8ba-c8050e0d7229" executionId="b27a1bfc-c7c9-4640-a59a-a9c6e1273c24" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="08c57d99-a9e9-ff46-cca6-09794e10a024" executionId="47f4f94c-62f2-4211-9e6b-44b91276c01f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d4e7205e-0094-f215-8d62-4a81d0696cda" executionId="ac4d6de7-c020-45b2-bfff-654320e5c824" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="14f2e646-b1c4-7e13-46e4-4048c17c1efd" executionId="12345da9-7a30-4caa-904f-7cf7ae11a77c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="42d58943-6a15-5b69-ed7d-e21f70b8999b" executionId="dd1bfdfe-c16e-4985-aa25-d60bf9dafad7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a3631882-43a6-2796-0f67-944563517077" executionId="f0d76e12-469d-4d17-b0e3-d121d76b5274" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cd1236c8-2f28-dd47-d99d-a1a6c66b11b1" executionId="5b485521-3a63-4759-97a3-0a9a1bcbfc37" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="814cab6f-2fa8-5711-79e6-699a14618998" executionId="607f1be3-6567-477c-a4f0-78fb80cd198a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bf4d7f24-4193-6505-1d6e-0865a891ecbb" executionId="aaacba82-4944-4b6b-ba09-20228237848d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="df547514-15e8-0819-02de-1cdc4fa90fe2" executionId="3d7f3432-c42a-4e53-984a-4c7f4234c612" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9d9380e4-dc9a-8ec4-bc61-aab2c4b83ff2" executionId="05811b6d-86fa-4579-9df9-43f0d945df4f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8a7c80be-4b54-090d-af52-10f92e6d22fb" executionId="e0701692-1eaa-4c28-bd40-b633482fd980" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ef8ce39d-ab8e-3386-819f-998f0c8ca6c0" executionId="a3b1c7ce-c934-4a90-93dc-09837491b725" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4644cda6-75e5-95dc-6371-a0c8f3e90da5" executionId="289d96e1-49ab-4e49-a80f-ed9f9734412a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fee1563b-0ed1-853a-b9e0-313545c57411" executionId="baeb71f6-9a14-40df-80fc-56a86c94a939" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bbfa55b4-b72f-08f1-939a-a8e673f6e8f8" executionId="916e6912-7ccb-4dbd-a4bd-7c7173d74d5a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d7458eff-d430-c170-994a-2dc4bcc8ce8c" executionId="a3d73faa-de24-40fe-be32-8332ccf4ed1e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="88b86e64-160b-92f3-0c43-091ca7547c36" executionId="516d8013-6ab0-4b50-a783-cc898de8baf2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0b937c3f-4ff8-ec0c-49c4-5729e753438b" executionId="3f0ced4c-5598-4c4a-9340-7f478b52bed5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8a0a1364-154c-f6d4-5cfb-268068010cbe" executionId="72bc3e30-6833-403b-8176-75297b8ad030" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="21" executed="21" passed="21" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 9.0.10)
+[xUnit.net 00:00:00.10]   Discovering: GeoSpiderApp.Core.Tests
+[xUnit.net 00:00:00.15]   Discovered:  GeoSpiderApp.Core.Tests
+[xUnit.net 00:00:00.15]   Starting:    GeoSpiderApp.Core.Tests
+Location collection failed: GPS unavailable
+Location collection failed: GPS unavailable
+Location collection failed: GPS unavailable
+[xUnit.net 00:00:04.36]   Finished:    GeoSpiderApp.Core.Tests
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>
