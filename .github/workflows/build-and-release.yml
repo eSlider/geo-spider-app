@@ -62,6 +62,7 @@ jobs:
         dotnet publish GeoSpiderApp.MAUI/GeoSpiderApp.MAUI.csproj `
           -c Release `
           -f net9.0-android `
+          -r android-arm64 `
           --self-contained `
           -p:AndroidPackageFormat=apk `
           -o ./publish
