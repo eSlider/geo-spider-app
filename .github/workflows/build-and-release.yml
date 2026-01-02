@@ -54,15 +54,24 @@ jobs:
         dotnet workload install maui android --skip-manifest-update
         dotnet workload list
 
+    - name: Verify MAUI installation
+      run: |
+        dotnet --version
+        dotnet workload list
+
     - name: Restore dependencies
       run: dotnet restore
+
+    - name: Build MAUI project
+      run: |
+        dotnet build GeoSpiderApp.MAUI/GeoSpiderApp.MAUI.csproj -c Release -f net9.0-android
 
     - name: Build APK
       run: |
         dotnet publish GeoSpiderApp.MAUI/GeoSpiderApp.MAUI.csproj `
           -c Release `
           -f net9.0-android `
-          -r android `
+          -r android-arm64-v8a `
           --self-contained `
           -p:AndroidPackageFormat=apk `
           -o ./publish
