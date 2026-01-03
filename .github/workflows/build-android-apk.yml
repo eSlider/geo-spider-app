@@ -32,6 +32,11 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
+    - name: Create local.properties
+      run: |
+        echo "sdk.dir=$ANDROID_HOME" > local.properties
+        cat local.properties
+
     - name: Cache Gradle dependencies
       uses: actions/cache@v4
       with:
@@ -43,7 +48,12 @@ jobs:
           ${{ runner.os }}-gradle-
 
     - name: Build with Gradle
+      env:
+        ANDROID_HOME: ${{ env.ANDROID_HOME }}
+        ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
       run: |
+        echo "ANDROID_HOME: $ANDROID_HOME"
+        echo "ANDROID_SDK_ROOT: $ANDROID_SDK_ROOT"
         ./gradlew :androidApp:assembleRelease --no-daemon --stacktrace
 
     - name: List build outputs
