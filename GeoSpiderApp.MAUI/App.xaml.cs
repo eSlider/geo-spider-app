@@ -5,7 +5,11 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
-
-        MainPage = new MainPage();
+        
+        // Get MainPage from service provider
+        if (MauiProgram.CurrentApp != null)
+        {
+            MainPage = MauiProgram.CurrentApp.Services.GetRequiredService<MainPage>();
+        }
     }
 }

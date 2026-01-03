@@ -8,6 +8,8 @@ namespace GeoSpiderApp.MAUI;
 
 public static class MauiProgram
 {
+    public static MauiApp? CurrentApp { get; private set; }
+
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
@@ -40,7 +42,11 @@ public static class MauiProgram
         var config = ConfigurationLoader.LoadFromFile("config.yaml");
         builder.Services.AddSingleton(config);
 
-        return builder.Build();
+        // Register MainPage with dependency injection
+        builder.Services.AddTransient<MainPage>();
+
+        CurrentApp = builder.Build();
+        return CurrentApp;
     }
 }
 
