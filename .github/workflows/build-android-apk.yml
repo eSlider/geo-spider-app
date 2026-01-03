@@ -104,6 +104,7 @@ jobs:
         VERSION_TAG: ${{ steps.version.outputs.version-tag }}
         VERSION_NAME: ${{ steps.version.outputs.version-name }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -113,22 +114,26 @@ jobs:
         else
           git tag -a "$VERSION_TAG" -m "Release $VERSION_NAME"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          git push origin "$VERSION_TAG"
+          git push origin "$VERSION_TAG" || {
+            echo "⚠️ Failed to push tag, but continuing..."
+            exit 0
+          }
           echo "✅ Created and pushed tag: $VERSION_TAG"
         fi
 
     - name: Create GitHub Release
-      if: success() && github.ref == 'refs/heads/main'
+      if: always() && github.ref == 'refs/heads/main' && steps.build-apk.outcome == 'success'
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ steps.version.outputs.version-tag }}
         name: Release ${{ steps.version.outputs.version-name }}
+        generate_release_notes: true
         body: |
           ## Geo Spider App ${{ steps.version.outputs.version-name }}
           
           ### Changes
           - Automated release from commit ${{ github.sha }}
-          - Build date: ${{ github.event.head_commit.timestamp || github.run_started_at }}
+          - Build date: ${{ github.run_started_at }}
           
           ### Downloads
           - **APK**: Download from the assets below
