@@ -12,8 +12,8 @@ android {
         applicationId = "com.geospider.android"
         minSdk = 21
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = project.findProperty("VERSION_CODE")?.toString()?.toInt() ?: 1
+        versionName = project.findProperty("VERSION_NAME")?.toString() ?: "1.0.0"
     }
 
     buildTypes {

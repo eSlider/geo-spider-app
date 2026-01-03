@@ -208,6 +208,24 @@ build_apk() {
     info "Build log saved to: ${LOG_FILE}"
 }
 
+# Extract version information
+get_version_info() {
+    if [ -f "${PROJECT_ROOT}/gradle.properties" ]; then
+        VERSION_NAME=$(grep "^VERSION_NAME=" "${PROJECT_ROOT}/gradle.properties" | cut -d'=' -f2 | tr -d ' ' || echo "1.0.0")
+        VERSION_CODE=$(grep "^VERSION_CODE=" "${PROJECT_ROOT}/gradle.properties" | cut -d'=' -f2 | tr -d ' ' || echo "1")
+    else
+        VERSION_NAME="1.0.0"
+        VERSION_CODE="1"
+    fi
+    
+    # Output version info for CI/CD
+    if [ "${CI:-false}" = "true" ] && [ -n "${GITHUB_OUTPUT:-}" ]; then
+        echo "version-name=${VERSION_NAME}" >> "${GITHUB_OUTPUT}"
+        echo "version-code=${VERSION_CODE}" >> "${GITHUB_OUTPUT}"
+        echo "version-tag=v${VERSION_NAME}" >> "${GITHUB_OUTPUT}"
+    fi
+}
+
 # Find and display APK information
 display_apk_info() {
     APK_DIR="${PROJECT_ROOT}/geo-spider-app/androidApp/build/outputs/apk/release"
@@ -226,10 +244,14 @@ display_apk_info() {
     
     APK_SIZE=$(du -h "${APK_FILE}" | cut -f1)
     
+    # Get version info
+    get_version_info
+    
     info "APK built successfully!"
     echo ""
     echo "  Location: ${APK_FILE}"
     echo "  Size: ${APK_SIZE}"
+    echo "  Version: ${VERSION_NAME} (${VERSION_CODE})"
     echo ""
     
     # In CI/CD, output the path for artifact upload

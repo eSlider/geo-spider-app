@@ -1,0 +1,150 @@
+# Geo Spider App - Cursor Rules
+
+## Project Overview
+Geo Spider is a Kotlin Multiplatform Android application for GPS/GLONASS location tracking with background services, offline data accumulation, and automatic synchronization.
+
+## Technology Stack
+- **Language**: Kotlin 2.0.21
+- **Platform**: Android (Kotlin Multiplatform)
+- **UI Framework**: Jetpack Compose with Material Design 3
+- **Build System**: Gradle 8.0+
+- **Min SDK**: 21 (Android 5.0)
+- **Target SDK**: 35
+- **JDK**: 17
+
+## Project Structure
+```
+geo-spider-app/
+├── shared/                    # Kotlin Multiplatform shared module
+│   ├── src/
+│   │   ├── commonMain/        # Common business logic, data models, interfaces
+│   │   └── androidMain/       # Android-specific implementations
+│   └── build.gradle.kts
+├── androidApp/                # Android application module
+│   ├── src/main/              # Android app code (Compose UI)
+│   └── build.gradle.kts
+bin/                           # Build and utility scripts
+var/logs/                      # Build logs (gitignored)
+docs/                          # Documentation
+```
+
+## Code Style & Best Practices
+
+### Kotlin
+- Use strict types - avoid `Any`, `Unit` when specific types are available
+- Prefer functional programming over OOP when possible
+- Use data classes for models
+- Use sealed classes/interfaces for state management
+- Follow Kotlin coding conventions: https://kotlinlang.org/docs/coding-conventions.html
+- Use `suspend` functions for async operations, prefer coroutines over callbacks
+
+### Android
+- Use Jetpack Compose for UI - no XML layouts
+- Follow Material Design 3 guidelines
+- Use ViewModel for state management
+- Implement proper lifecycle awareness
+- Request permissions at runtime
+- Handle location services gracefully (check availability, handle errors)
+
+### Architecture
+- Follow clean architecture principles
+- Separate business logic (shared module) from platform-specific code
+- Use dependency injection (consider Koin or manual DI)
+- Keep UI components simple and composable
+- Use interfaces for platform abstractions
+
+### Error Handling
+- Use Result types or sealed classes for error handling
+- Never silently fail - log errors appropriately
+- Provide user-friendly error messages
+- Handle network errors gracefully
+
+## File Naming
+- Kotlin files: PascalCase (e.g., `LocationService.kt`)
+- Resource files: snake_case (e.g., `location_icon.xml`)
+- Build scripts: kebab-case (e.g., `build-apk.sh`)
+
+## Dependencies
+- Prefer official Android/Kotlin libraries
+- Use version catalogs (libs.versions.toml) for dependency management
+- Keep dependencies up to date
+- Document why non-standard dependencies are needed
+
+## Testing
+- Write unit tests for business logic
+- Test location services with mock data
+- Test error scenarios
+- Use descriptive test names
+
+## Build & CI/CD
+- All builds must produce logs in `var/logs/`
+- Successful builds create GitHub releases with semantic version tags
+- Version format: `vMAJOR.MINOR.PATCH` (e.g., `v1.2.3`)
+- Version is managed in `gradle.properties` and `androidApp/build.gradle.kts`
+- Build script: `./bin/build-apk.sh`
+- CI/CD: GitHub Actions (`.github/workflows/build-android-apk.yml`)
+
+## Git Workflow
+- Use meaningful commit messages
+- Follow conventional commits when possible
+- Never commit:
+  - `var/logs/` directory
+  - `local.properties`
+  - Build artifacts (`.apk`, `.aab`)
+  - IDE-specific files
+
+## Documentation
+- Keep README.md up to date
+- Document public APIs
+- Add comments for complex logic
+- Update CHANGELOG.md for releases
+
+## Code Generation Rules
+
+### React/Compose
+- Make UI beautiful and production-ready, not cookie-cutter
+- Use stock photos from Unsplash (valid URLs only, no downloads)
+- Use Material Design 3 components
+- Support dark theme
+- Make components reusable and composable
+
+### All Languages
+- Write comments ONLY in English
+- Prefer functional programming over OOP when appropriate
+- Make minimal changes - modify only what's necessary
+- Follow TDD, DRY, KISS, YAGNI principles
+- Use strict types
+- Use clean functions - no hidden changes, no in-place mutations
+- Follow all linter rules
+- Follow best practices
+
+### Libraries
+- Check for TypeScript/Kotlin definitions
+- Read library source code instead of googling when possible
+- Document why libraries are chosen
+
+## Repository Best Practices
+- Always read README.md first for project context
+- Pay attention to README if `.cursorrules` is not present
+- Summarize key points before starting work
+
+## Version Management
+- Version format: Semantic Versioning (MAJOR.MINOR.PATCH)
+- Version stored in: `gradle.properties` as `VERSION_NAME` and `VERSION_CODE`
+- Version code increments with each build
+- Git tags: `v{VERSION_NAME}` (e.g., `v1.0.0`)
+- GitHub releases: Created automatically on successful builds
+
+## Location Services
+- Always check location permissions before accessing location
+- Handle location service unavailability gracefully
+- Support both GPS and network providers
+- Validate location data (latitude/longitude ranges)
+- Use appropriate accuracy requirements
+
+## Performance
+- Minimize battery usage for background location tracking
+- Batch location updates when possible
+- Use appropriate update intervals
+- Cache location data locally before syncing
+
