@@ -98,6 +98,13 @@ jobs:
         retention-days: 30
         if-no-files-found: error
 
+    - name: Download APK artifact
+      if: success() && github.ref == 'refs/heads/main'
+      uses: actions/download-artifact@v4
+      with:
+        name: geo-spider-apk
+        path: ./release-apk
+
     - name: Create GitHub Release
       if: success() && github.ref == 'refs/heads/main'
       uses: softprops/action-gh-release@v1
@@ -127,7 +134,7 @@ jobs:
           - **Version Code**: ${{ steps.version.outputs.version-code }}
           - **Commit**: ${{ github.sha }}
         files: |
-          ${{ steps.build-apk.outputs.apk-path }}
+          ./release-apk/*.apk
         draft: false
         prerelease: false
       env:
