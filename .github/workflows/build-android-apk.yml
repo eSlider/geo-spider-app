@@ -29,14 +29,6 @@ jobs:
         api-level: 34
         build-tools: 34.0.0
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-
-    - name: Create local.properties
-      run: |
-        echo "sdk.dir=$ANDROID_HOME" > local.properties
-        cat local.properties
-
     - name: Cache Gradle dependencies
       uses: actions/cache@v4
       with:
@@ -47,35 +39,26 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-
 
-    - name: Build with Gradle
+    - name: Build APK
+      id: build-apk
       env:
         ANDROID_HOME: ${{ env.ANDROID_HOME }}
         ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
+        CI: true
       run: |
-        echo "ANDROID_HOME: $ANDROID_HOME"
-        echo "ANDROID_SDK_ROOT: $ANDROID_SDK_ROOT"
-        ./gradlew :androidApp:assembleRelease --no-daemon --stacktrace
-
-    - name: List build outputs
-      run: |
-        find geo-spider-app/androidApp/build/outputs -type f -name "*.apk" || echo "No APK files found"
-        ls -la geo-spider-app/androidApp/build/outputs/apk/ || echo "APK directory not found"
-
-    - name: Find APK
-      id: find-apk
-      run: |
+        ./bin/build-apk.sh
+        # Extract APK path from script output
         APK_FILE=$(find geo-spider-app/androidApp/build/outputs/apk/release -name "*.apk" | head -1)
         if [ -z "$APK_FILE" ]; then
           echo "APK file not found!"
-          find geo-spider-app/androidApp/build/outputs -type f || true
           exit 1
         fi
         echo "apk-path=$APK_FILE" >> $GITHUB_OUTPUT
-        echo "Found APK: $APK_FILE"
+        echo "Built APK: $APK_FILE"
 
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
       with:
         name: geo-spider-apk
-        path: ${{ steps.find-apk.outputs.apk-path }}
+        path: ${{ steps.build-apk.outputs.apk-path }}
         retention-days: 30

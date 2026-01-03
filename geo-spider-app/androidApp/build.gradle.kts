@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.geospider.android"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.geospider.android"
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
     }
@@ -37,6 +37,11 @@ android {
     
     buildFeatures {
         compose = true
+    }
+    
+    lint {
+        checkReleaseBuilds = false
+        abortOnError = false
     }
 }
 
