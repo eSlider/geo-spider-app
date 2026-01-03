@@ -22,6 +22,10 @@
 
     <!-- Target Android version -->
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+    
+    <!-- Android Signing (use debug keystore for CI) -->
+    <AndroidKeyStore Condition="'$(AndroidKeyStore)' == ''">False</AndroidKeyStore>
+    <AndroidSigningKeyStore Condition="'$(AndroidSigningKeyStore)' == ''">False</AndroidSigningKeyStore>
   </PropertyGroup>
 
   <ItemGroup>
@@ -40,6 +44,9 @@
 
     <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+    
+    <!-- Include config.yaml as an asset -->
+    <MauiAsset Include="..\config.yaml" LogicalName="config.yaml" />
   </ItemGroup>
 
   <ItemGroup>

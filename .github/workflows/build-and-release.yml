@@ -74,6 +74,8 @@ jobs:
           -r android-arm64-v8a `
           --self-contained `
           -p:AndroidPackageFormat=apk `
+          -p:AndroidSigningKeyStore=False `
+          -p:AndroidKeyStore=False `
           -o ./publish
 
     - name: List build artifacts
