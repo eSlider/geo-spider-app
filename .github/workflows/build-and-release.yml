@@ -71,17 +71,31 @@ jobs:
         dotnet publish GeoSpiderApp.MAUI/GeoSpiderApp.MAUI.csproj `
           -c Release `
           -f net9.0-android `
+          --self-contained `
           -p:AndroidPackageFormat=apk `
           -o ./publish
 
     - name: List build artifacts
       run: Get-ChildItem -Path ./publish -Recurse
 
+    - name: Find APK file
+      id: find-apk
+      run: |
+        $apkFile = Get-ChildItem -Path ./publish -Filter *.apk -Recurse | Select-Object -First 1
+        if ($apkFile) {
+          echo "apk-path=$($apkFile.FullName)" >> $env:GITHUB_OUTPUT
+          echo "Found APK: $($apkFile.FullName)"
+        } else {
+          echo "No APK file found!"
+          Get-ChildItem -Path ./publish -Recurse | Format-Table
+          exit 1
+        }
+
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
       with:
         name: geo-spider-apk
-        path: ./publish/GeoSpiderApp.MAUI-Signed.apk
+        path: ${{ steps.find-apk.outputs.apk-path }}
         retention-days: 30
 
   release:
