@@ -71,11 +71,10 @@ jobs:
         dotnet publish GeoSpiderApp.MAUI/GeoSpiderApp.MAUI.csproj `
           -c Release `
           -f net9.0-android `
-          -r android-arm64-v8a `
+          -r android-arm64 `
           --self-contained `
           -p:AndroidPackageFormat=apk `
-          -p:AndroidSigningKeyStore=False `
-          -p:AndroidKeyStore=False `
+          -p:AndroidCreatePackagePerAbi=true `
           -o ./publish
 
     - name: List build artifacts

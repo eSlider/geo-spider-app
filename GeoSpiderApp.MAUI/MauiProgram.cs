@@ -3,6 +3,7 @@ using GeoSpiderApp.Core.Background;
 using GeoSpiderApp.Core.Sync;
 using GeoSpiderApp.Core.Location;
 using Microsoft.Extensions.Logging;
+using System.IO;
 
 namespace GeoSpiderApp.MAUI;
 
@@ -38,8 +39,37 @@ public static class MauiProgram
         builder.Services.AddSingleton<GeoSpiderBackgroundService>();
         builder.Services.AddSingleton<DataSyncService>();
 
-        // Load configuration
-        var config = ConfigurationLoader.LoadFromFile("config.yaml");
+        // Load configuration (with fallback to defaults if file not found)
+        AppConfig config;
+        try
+        {
+            if (File.Exists("config.yaml"))
+            {
+                config = ConfigurationLoader.LoadFromFile("config.yaml");
+            }
+            else
+            {
+                // Use default configuration if file not found
+                config = new AppConfig
+                {
+                    ServerUrl = "https://api.example.com/locations",
+                    CollectionIntervalSeconds = 60,
+                    SyncBatchSize = 50,
+                    MaxOfflineStorageDays = 7
+                };
+            }
+        }
+        catch
+        {
+            // Fallback to default configuration on any error
+            config = new AppConfig
+            {
+                ServerUrl = "https://api.example.com/locations",
+                CollectionIntervalSeconds = 60,
+                SyncBatchSize = 50,
+                MaxOfflineStorageDays = 7
+            };
+        }
         builder.Services.AddSingleton(config);
 
         // Register MainPage with dependency injection
