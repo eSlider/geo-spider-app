@@ -173,6 +173,12 @@ clean_build() {
 build_apk() {
     info "Building release APK..."
     
+    # Create logs directory
+    LOGS_DIR="${PROJECT_ROOT}/var/logs"
+    mkdir -p "${LOGS_DIR}"
+    TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+    LOG_FILE="${LOGS_DIR}/build_${TIMESTAMP}.log"
+    
     BUILD_CMD=(
         "${PROJECT_ROOT}/gradlew"
         ":androidApp:assembleRelease"
@@ -185,8 +191,12 @@ build_apk() {
         BUILD_CMD+=("--quiet")
     fi
     
-    if ! "${BUILD_CMD[@]}"; then
+    info "Build logs will be saved to: ${LOG_FILE}"
+    
+    # Run build and capture output to log file
+    if ! "${BUILD_CMD[@]}" 2>&1 | tee "${LOG_FILE}"; then
         error "Build failed!"
+        error "Build log saved to: ${LOG_FILE}"
         error "Common issues:"
         error "  1. Android SDK licenses not accepted - run: sdkmanager --licenses"
         error "  2. Missing Android SDK components - install via Android Studio SDK Manager"
@@ -195,6 +205,7 @@ build_apk() {
     fi
     
     info "Build completed successfully!"
+    info "Build log saved to: ${LOG_FILE}"
 }
 
 # Find and display APK information

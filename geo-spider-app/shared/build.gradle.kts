@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.serialization)
     id("com.android.library")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.21"
 }
 
 kotlin {
@@ -26,8 +25,10 @@ kotlin {
         }
         
         val androidMain by getting {
+            dependsOn(commonMain)
             dependencies {
                 implementation(libs.ktor.client.android)
+                implementation(libs.androidx.core.ktx)
             }
         }
     }
@@ -35,7 +36,7 @@ kotlin {
 
 android {
     namespace = "com.geospider.shared"
-    compileSdk = 34
+    compileSdk = 35
     
     defaultConfig {
         minSdk = 21

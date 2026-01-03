@@ -50,15 +50,32 @@ jobs:
         # Extract APK path from script output
         APK_FILE=$(find geo-spider-app/androidApp/build/outputs/apk/release -name "*.apk" | head -1)
         if [ -z "$APK_FILE" ]; then
-          echo "APK file not found!"
+          echo "❌ APK file not found!"
+          echo "Checking build outputs..."
+          ls -la geo-spider-app/androidApp/build/outputs/apk/release/ || true
+          echo "Checking logs..."
+          ls -la var/logs/ || true
           exit 1
         fi
+        echo "✅ APK file found: $APK_FILE"
+        echo "APK size: $(du -h "$APK_FILE" | cut -f1)"
         echo "apk-path=$APK_FILE" >> $GITHUB_OUTPUT
         echo "Built APK: $APK_FILE"
 
+    - name: Upload build logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-logs
+        path: var/logs/
+        retention-days: 7
+        if-no-files-found: warn
+
     - name: Upload APK artifact
+      if: success()
       uses: actions/upload-artifact@v4
       with:
         name: geo-spider-apk
         path: ${{ steps.build-apk.outputs.apk-path }}
         retention-days: 30
+        if-no-files-found: error

@@ -167,3 +167,6 @@ captures/
 .externalNativeBuild
 .cxx/
 *.hprof
+
+# Build logs
+var/logs/
