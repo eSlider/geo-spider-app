@@ -98,36 +98,14 @@ jobs:
         retention-days: 30
         if-no-files-found: error
 
-    - name: Create Git Tag
-      if: success() && github.ref == 'refs/heads/main'
-      env:
-        VERSION_TAG: ${{ steps.version.outputs.version-tag }}
-        VERSION_NAME: ${{ steps.version.outputs.version-name }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GITHUB_REPOSITORY: ${{ github.repository }}
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        # Check if tag already exists
-        if git rev-parse "$VERSION_TAG" >/dev/null 2>&1; then
-          echo "⚠️ Tag $VERSION_TAG already exists, skipping tag creation"
-        else
-          git tag -a "$VERSION_TAG" -m "Release $VERSION_NAME"
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          git push origin "$VERSION_TAG" || {
-            echo "⚠️ Failed to push tag, but continuing..."
-            exit 0
-          }
-          echo "✅ Created and pushed tag: $VERSION_TAG"
-        fi
-
     - name: Create GitHub Release
-      if: always() && github.ref == 'refs/heads/main' && steps.build-apk.outcome == 'success'
+      if: success() && github.ref == 'refs/heads/main'
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ steps.version.outputs.version-tag }}
         name: Release ${{ steps.version.outputs.version-name }}
         generate_release_notes: true
+        make_latest: true
         body: |
           ## Geo Spider App ${{ steps.version.outputs.version-name }}
           
