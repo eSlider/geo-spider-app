@@ -77,7 +77,7 @@ All features will be implemented following Test-Driven Development:
 - ✅ All 21 tests passing with 100% coverage
 
 ## Build Scripts (Completed)
-- ✅ Created comprehensive APK build script for Linux/macOS (`build/build-apk.sh`)
+- ✅ Created comprehensive APK build script for Linux/macOS (`bin/build-apk.sh`)
 - ✅ Created Windows batch build script (`build/build-apk.bat`)
 - ✅ Added detailed build documentation and prerequisites
 - ✅ Included signing configuration for release builds

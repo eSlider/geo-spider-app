@@ -1,5 +1,5 @@
 # .NET build outputs
-bin/
+# Note: bin/ directory is used for scripts, not .NET outputs
 obj/
 *.dll
 *.exe
