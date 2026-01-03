@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
+    id("com.android.library")
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.21"
 }
 
 kotlin {

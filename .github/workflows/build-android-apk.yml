@@ -25,13 +25,31 @@ jobs:
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
+      with:
+        api-level: 34
+        build-tools: 34.0.0
 
     - name: Grant execute permission for gradlew
-      run: chmod +x gradlew || echo "gradlew not found, will be created"
+      run: chmod +x gradlew
+
+    - name: Cache Gradle dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
 
     - name: Build with Gradle
       run: |
-        ./gradlew :androidApp:assembleRelease --no-daemon
+        ./gradlew :androidApp:assembleRelease --no-daemon --stacktrace
+
+    - name: List build outputs
+      run: |
+        find geo-spider-app/androidApp/build/outputs -type f -name "*.apk" || echo "No APK files found"
+        ls -la geo-spider-app/androidApp/build/outputs/apk/ || echo "APK directory not found"
 
     - name: Find APK
       id: find-apk

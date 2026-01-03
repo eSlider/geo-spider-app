@@ -154,6 +154,7 @@ local.properties
 *.keystore
 !gradle/wrapper/gradle-wrapper.jar
 !gradle/wrapper/gradle-wrapper.properties
+!local.properties.example
 
 # Kotlin
 *.kotlin_module
