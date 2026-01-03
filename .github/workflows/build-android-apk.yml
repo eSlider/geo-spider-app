@@ -1,0 +1,53 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew || echo "gradlew not found, will be created"
+
+    - name: Build with Gradle
+      run: |
+        ./gradlew :androidApp:assembleRelease --no-daemon
+
+    - name: Find APK
+      id: find-apk
+      run: |
+        APK_FILE=$(find geo-spider-app/androidApp/build/outputs/apk/release -name "*.apk" | head -1)
+        if [ -z "$APK_FILE" ]; then
+          echo "APK file not found!"
+          find geo-spider-app/androidApp/build/outputs -type f || true
+          exit 1
+        fi
+        echo "apk-path=$APK_FILE" >> $GITHUB_OUTPUT
+        echo "Found APK: $APK_FILE"
+
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: geo-spider-apk
+        path: ${{ steps.find-apk.outputs.apk-path }}
+        retention-days: 30

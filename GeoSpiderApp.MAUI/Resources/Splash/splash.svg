@@ -1,6 +1,0 @@
-<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-  <rect width="512" height="512" fill="#512BD4"/>
-  <circle cx="256" cy="256" r="150" fill="white"/>
-  <circle cx="256" cy="256" r="100" fill="#512BD4"/>
-  <text x="256" y="290" text-anchor="middle" fill="white" font-family="Arial" font-size="80" font-weight="bold">Geo Spider</text>
-</svg>

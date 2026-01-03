@@ -139,3 +139,30 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Android / Kotlin build outputs
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+build/
+.gradle/
+local.properties
+*.iml
+.idea/
+*.keystore
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# Kotlin
+*.kotlin_module
+*.kt.swp
+*.kt.swo
+
+# Android Studio
+*.log
+captures/
+.externalNativeBuild
+.cxx/
+*.hprof
