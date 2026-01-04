@@ -41,6 +41,10 @@ jobs:
           platforms;android-35
           build-tools;35.0.0
         cache: true
+      env:
+        ANDROID_HOME: ${{ env.ANDROID_HOME }}
+        ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
+        PATH: ${{ env.PATH }}:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin:${{ env.ANDROID_HOME }}/platform-tools
 
     - name: Cache Gradle dependencies
       uses: actions/cache@v4
