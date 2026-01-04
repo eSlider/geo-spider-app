@@ -39,7 +39,7 @@ Thank you for your interest in contributing to Geo Spider App! This document pro
 
 **Option 2: Local Development Environment**
 - **Android Studio**: Hedgehog (2023.1.1) or later
-- **JDK**: 25 (recommended) or 21+
+- **JDK**: 21 (LTS, recommended) or 17+
 - **Android SDK**: API level 35 (Android 14+)
 - **Gradle**: 8.9+ (included via wrapper)
 - **Git**: Latest version
@@ -479,7 +479,7 @@ docker-compose down
 
 ### Gradle build fails
 
-- Check Java version: `java -version` (should be 21 or 25)
+- Check Java version: `java -version` (should be 17, 21, or 25)
 - Verify Gradle wrapper: `./gradlew --version`
 - Clean build: `./gradlew clean`
 - Check `gradle.properties` for configuration issues
