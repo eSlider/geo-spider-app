@@ -32,11 +32,7 @@ jobs:
         cache: 'gradle'
 
     - name: Set up Android SDK
-      uses: amyu/setup-android@v5
-      with:
-        sdk-version: 35
-        build-tools-version: 35.0.0
-        cache-disabled: true
+      uses: android-actions/setup-android@v3
 
     - name: Calculate Next Version from Git Tags
       id: version
