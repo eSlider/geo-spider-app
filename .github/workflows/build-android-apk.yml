@@ -105,6 +105,7 @@ jobs:
         GRADLE_CACHE_DIR="$HOME/.gradle"
         mkdir -p "$GRADLE_CACHE_DIR"
         
+        # Create a build script inside the container to avoid shell escaping issues
         docker run --rm \
           --entrypoint="/bin/bash" \
           -v "${{ github.workspace }}":/home/androidusr/workspace \
@@ -117,17 +118,17 @@ jobs:
           -c "
             # Debug: Show environment
             echo '📋 Environment:'
-            echo \"  User: \$(whoami)\"
-            echo \"  PWD: \$(pwd)\"
-            echo \"  Java: \$(java -version 2>&1 | head -1)\"
-            echo \"  ANDROID_HOME: \${ANDROID_HOME:-NOT SET}\"
-            echo \"  ANDROID_SDK_ROOT: \${ANDROID_SDK_ROOT:-NOT SET}\"
-            echo \"  Gradlew exists: \$(test -f ./gradlew && echo YES || echo NO)\"
-            echo \"  Gradle cache: \$(ls -ld /home/androidusr/.gradle 2>/dev/null || echo 'NOT ACCESSIBLE')\"
+            whoami || echo 'whoami failed'
+            pwd || echo 'pwd failed'
+            java -version 2>&1 | head -1 || echo 'Java check failed'
+            echo \"ANDROID_HOME: \${ANDROID_HOME:-NOT SET}\"
+            echo \"ANDROID_SDK_ROOT: \${ANDROID_SDK_ROOT:-NOT SET}\"
+            test -f ./gradlew && echo 'Gradlew: YES' || echo 'Gradlew: NO'
+            ls -ld /home/androidusr/.gradle 2>/dev/null || echo 'Gradle cache: NOT ACCESSIBLE'
             echo ''
             
             # Make gradlew executable
-            chmod +x ./gradlew || true
+            chmod +x ./gradlew 2>&1 || echo 'chmod gradlew failed (non-fatal)'
             
             # Ensure build outputs directory exists
             mkdir -p /home/androidusr/workspace/build-outputs
@@ -135,13 +136,20 @@ jobs:
             
             # Build APK - use gradlew which handles everything
             echo '🔨 Building APK with Gradle...'
-            set -e
-            ./gradlew :androidApp:assembleRelease \
+            LOG_FILE=\"/home/androidusr/workspace/var/logs/build_\$(date +%Y%m%d_%H%M%S).log\"
+            if ./gradlew :androidApp:assembleRelease \
               -PVERSION_NAME=\"\$VERSION_NAME\" \
               -PVERSION_CODE=\"\$VERSION_CODE\" \
               --no-daemon \
-              --stacktrace 2>&1 | tee /home/androidusr/workspace/var/logs/build_\$(date +%Y%m%d_%H%M%S).log
-            set +e
+              --stacktrace 2>&1 | tee \"\$LOG_FILE\"; then
+              echo '✅ Gradle build succeeded'
+            else
+              BUILD_EXIT=\$?
+              echo \"❌ Build failed with exit code: \$BUILD_EXIT\"
+              echo \"Last 100 lines of log:\"
+              tail -100 \"\$LOG_FILE\" 2>/dev/null || echo \"Could not read log file\"
+              exit \$BUILD_EXIT
+            fi
             
             # Find APK file
             APK_FILE=\$(find geo-spider-app/androidApp/build/outputs/apk/release -name \"*.apk\" | head -1)
