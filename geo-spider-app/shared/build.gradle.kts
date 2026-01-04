@@ -8,9 +8,9 @@ plugins {
 kotlin {
     androidTarget {
         compilations.all {
-        kotlinOptions {
-            jvmTarget = "21"
-        }
+            kotlinOptions {
+                jvmTarget = "21"
+            }
         }
     }
     
