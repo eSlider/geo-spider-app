@@ -31,32 +31,8 @@ jobs:
         distribution: 'temurin'
         cache: 'gradle'
 
-    - name: Cache Android SDK
-      uses: actions/cache@v4
-      id: android-sdk-cache
-      with:
-        path: |
-          ${{ env.ANDROID_HOME }}/platforms
-          ${{ env.ANDROID_HOME }}/build-tools
-          ${{ env.ANDROID_HOME }}/cmdline-tools
-        key: ${{ runner.os }}-android-sdk-35-${{ hashFiles('**/*.gradle*') }}
-        restore-keys: |
-          ${{ runner.os }}-android-sdk-35-
-
     - name: Set up Android SDK
       uses: android-actions/setup-android@v3
-
-    - name: Cache Gradle dependencies and build cache
-      uses: actions/cache@v4
-      id: gradle-cache
-      with:
-        path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
-          ~/.gradle/build-cache
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
 
     - name: Calculate Next Version from Git Tags
       id: version
