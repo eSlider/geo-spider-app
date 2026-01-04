@@ -97,25 +97,48 @@ The APK will be generated at:
 
 ## Version Management
 
-The project uses **Semantic Versioning** (MAJOR.MINOR.PATCH).
+The project uses **Semantic Versioning** (MAJOR.MINOR.PATCH) with **automatic version calculation from git tags**.
+
+### Automatic Version Calculation
+
+**In CI/CD (GitHub Actions):**
+- The workflow automatically calculates the next version from existing git tags
+- Finds the latest tag (e.g., `v1.0.0`)
+- Increments the patch version (e.g., `1.0.0` → `1.0.1`)
+- Uses this version for the Gradle build and GitHub release
+- Creates a new tag with the calculated version
+
+**Version Priority:**
+1. **Build parameters** (`-PVERSION_NAME`, `-PVERSION_CODE`) - highest priority
+2. **gradle.properties** - fallback for local builds
+3. **Default** (`1.0.0`, code `1`) - if nothing else is set
 
 ### Version Configuration
 
-Version is managed in `gradle.properties`:
+For **local builds**, you can set version in `gradle.properties`:
 ```properties
 VERSION_NAME=1.0.0
 VERSION_CODE=1
 ```
 
-- **VERSION_NAME**: Semantic version (e.g., `1.0.0`)
-- **VERSION_CODE**: Integer that increments with each build
+Or pass it directly to Gradle:
+```bash
+./gradlew :androidApp:assembleRelease -PVERSION_NAME="1.0.1" -PVERSION_CODE="2"
+```
 
 ### Version Updates
 
-1. Update `VERSION_NAME` in `gradle.properties` for semantic changes
-2. Increment `VERSION_CODE` for each build
-3. The version is automatically used in the APK build
-4. Git tags are created as `v{VERSION_NAME}` (e.g., `v1.0.0`)
+**Automatic (CI/CD):**
+- No manual updates needed!
+- Each successful build to `main` automatically:
+  1. Calculates next version from latest git tag
+  2. Builds APK with that version
+  3. Creates git tag `v{VERSION_NAME}`
+  4. Creates GitHub release with the version
+
+**Manual (Local):**
+- Update `VERSION_NAME` in `gradle.properties` for local testing
+- Or use `-P` parameters when building
 
 ### Automated Releases
 

@@ -12,7 +12,10 @@ android {
         applicationId = "com.geospider.android"
         minSdk = 21
         targetSdk = 35
-        versionCode = project.findProperty("VERSION_CODE")?.toString()?.toInt() ?: 1
+        // Version priority: Build parameter (-P) > gradle.properties > default
+        // Build parameters are passed via -PVERSION_NAME and -PVERSION_CODE
+        // project.findProperty() reads from both -P parameters and gradle.properties
+        versionCode = project.findProperty("VERSION_CODE")?.toString()?.toIntOrNull() ?: 1
         versionName = project.findProperty("VERSION_NAME")?.toString() ?: "1.0.0"
     }
 

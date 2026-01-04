@@ -45,20 +45,45 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-
 
-    - name: Extract Version
+    - name: Calculate Next Version from Git Tags
       id: version
       run: |
-        if [ -f gradle.properties ]; then
-          VERSION_NAME=$(grep "^VERSION_NAME=" gradle.properties | cut -d'=' -f2 | tr -d ' ' || echo "1.0.0")
-          VERSION_CODE=$(grep "^VERSION_CODE=" gradle.properties | cut -d'=' -f2 | tr -d ' ' || echo "1")
-        else
+        # Fetch all tags
+        git fetch --tags --force
+        
+        # Get the latest version tag (format: vMAJOR.MINOR.PATCH)
+        LATEST_TAG=$(git tag -l "v*" | sort -V | tail -1 || echo "")
+        
+        if [ -z "$LATEST_TAG" ]; then
+          # No tags exist, start with 1.0.0
           VERSION_NAME="1.0.0"
-          VERSION_CODE="1"
+          VERSION_CODE=1
+          echo "📌 No existing tags found, starting with version 1.0.0"
+        else
+          # Extract version from tag (remove 'v' prefix)
+          LATEST_VERSION=$(echo "$LATEST_TAG" | sed 's/^v//')
+          echo "📌 Latest tag: $LATEST_TAG (version: $LATEST_VERSION)"
+          
+          # Parse version components
+          MAJOR=$(echo "$LATEST_VERSION" | cut -d'.' -f1)
+          MINOR=$(echo "$LATEST_VERSION" | cut -d'.' -f2)
+          PATCH=$(echo "$LATEST_VERSION" | cut -d'.' -f3)
+          
+          # Increment patch version
+          PATCH=$((PATCH + 1))
+          VERSION_NAME="$MAJOR.$MINOR.$PATCH"
+          
+          # Calculate version code (count of all tags + 1, or use patch as base)
+          TAG_COUNT=$(git tag -l "v*" | wc -l)
+          VERSION_CODE=$((TAG_COUNT + 1))
+          
+          echo "📌 Calculated next version: $VERSION_NAME (code: $VERSION_CODE)"
         fi
+        
         echo "version-name=$VERSION_NAME" >> $GITHUB_OUTPUT
         echo "version-code=$VERSION_CODE" >> $GITHUB_OUTPUT
         echo "version-tag=v$VERSION_NAME" >> $GITHUB_OUTPUT
-        echo "✅ Version: $VERSION_NAME (code: $VERSION_CODE)"
+        echo "✅ Next version: $VERSION_NAME (code: $VERSION_CODE)"
 
     - name: Build APK
       id: build-apk
@@ -66,8 +91,17 @@ jobs:
         ANDROID_HOME: ${{ env.ANDROID_HOME }}
         ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
         CI: true
+        VERSION_NAME: ${{ steps.version.outputs.version-name }}
+        VERSION_CODE: ${{ steps.version.outputs.version-code }}
       run: |
-        ./bin/build-apk.sh
+        # Pass version to Gradle build
+        echo "Building with version: $VERSION_NAME (code: $VERSION_CODE)"
+        ./gradlew :androidApp:assembleRelease \
+          -PVERSION_NAME="$VERSION_NAME" \
+          -PVERSION_CODE="$VERSION_CODE" \
+          --no-daemon \
+          --stacktrace
+        
         # Extract APK path from script output
         APK_FILE=$(find geo-spider-app/androidApp/build/outputs/apk/release -name "*.apk" | head -1)
         if [ -z "$APK_FILE" ]; then
