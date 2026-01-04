@@ -33,10 +33,15 @@ Thank you for your interest in contributing to Geo Spider App! This document pro
 
 ### Prerequisites
 
+**Option 1: Docker (Recommended)**
+- **Docker**: 20.10+ (for containerized builds)
+- **Docker Compose**: 2.0+ (optional, for local development)
+
+**Option 2: Local Development Environment**
 - **Android Studio**: Hedgehog (2023.1.1) or later
-- **JDK**: 17 or later
-- **Android SDK**: API level 21+ (Android 5.0+)
-- **Gradle**: 8.0+ (included via wrapper)
+- **JDK**: 21 (recommended) or 17+
+- **Android SDK**: API level 35 (Android 14+)
+- **Gradle**: 8.9+ (included via wrapper)
 - **Git**: Latest version
 
 ### Initial Setup
@@ -146,7 +151,12 @@ docs/                          # Documentation
 
 ### Build APK
 
-**Using build script (recommended):**
+**Using Docker (recommended for consistency):**
+```bash
+./bin/build-docker.sh
+```
+
+**Using build script (local development):**
 ```bash
 ./bin/build-apk.sh
 ```
@@ -191,6 +201,7 @@ docs/                          # Documentation
 Build logs are automatically saved to `var/logs/` with timestamps:
 - Format: `build_YYYYMMDD_HHMMSS.log`
 - Logs are gitignored (not committed)
+- Available as artifacts in GitHub Actions (7 days retention)
 
 ## Version Management
 
@@ -345,6 +356,15 @@ Add detailed instructions for building the APK locally.
 
 ## Development Tips
 
+### Key Components
+
+- `LocationData`: Location data model with validation and GeoJSON conversion
+- `GeoJson`: GeoJSON data models (Point, Feature, FeatureCollection)
+- `LocationRepository`: Repository interface for location data storage
+- `AndroidLocationRepository`: Android implementation using SQLDelight
+- `LocationService`: Location service interface and implementation
+- `AndroidLocationProvider`: Android-specific location provider
+
 ### Debugging
 
 - Use Android Studio's debugger
@@ -366,6 +386,7 @@ Add detailed instructions for building the APK locally.
 - Batch location updates when possible
 - Use appropriate update intervals
 - Cache location data locally before syncing
+- Use Gradle build cache and parallel execution (enabled in `gradle.properties`)
 
 ### Testing
 
@@ -374,6 +395,126 @@ Add detailed instructions for building the APK locally.
 - Test error scenarios
 - Use descriptive test names
 - Aim for high test coverage
+
+## Building Locally
+
+### With Docker (Recommended)
+
+For consistent, reproducible builds:
+
+1. **Ensure Docker is installed and running**
+2. **Build APK**:
+   ```bash
+   ./bin/build-docker.sh
+   ```
+
+The Docker build uses [budtmo/docker-android](https://github.com/budtmo/docker-android) image which contains:
+- Android SDK with command-line tools
+- Gradle 8.9
+- Android SDK platforms and build tools
+- All necessary dependencies
+
+**Benefits:**
+- Consistent build environment across all machines
+- No need to install Android SDK locally
+- Isolated build environment
+- Faster CI/CD pipelines
+
+### Without Docker
+
+1. **Ensure prerequisites are met** (see [Development Setup](#development-setup))
+2. **Set up Android SDK**:
+   - Set `ANDROID_HOME` environment variable
+   - Or create `local.properties` with: `sdk.dir=/path/to/android/sdk`
+3. **Accept Android SDK licenses**:
+   ```bash
+   ./bin/accept-android-licenses.sh
+   ```
+4. **Build APK**:
+   ```bash
+   ./bin/build-apk.sh
+   ```
+
+### Build with Docker Compose
+
+For interactive development with Docker:
+
+```bash
+# Start container
+docker-compose up -d
+
+# Execute commands inside container
+docker-compose exec android-builder ./gradlew :androidApp:assembleRelease
+
+# Stop container
+docker-compose down
+```
+
+## Troubleshooting
+
+### Build fails with "SDK licenses not accepted"
+
+```bash
+./bin/accept-android-licenses.sh
+```
+
+### Build fails with "Android SDK not found"
+
+- Set `ANDROID_HOME` environment variable:
+  ```bash
+  export ANDROID_HOME=$HOME/Android/Sdk
+  export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+  ```
+- Or create `local.properties` file in project root:
+  ```properties
+  sdk.dir=/path/to/android/sdk
+  ```
+
+### APK not found after build
+
+- Check build logs in `var/logs/`
+- Verify Android SDK is properly configured
+- Check GitHub Actions logs for CI/CD builds
+- Ensure build completed successfully (check exit code)
+
+### Gradle build fails
+
+- Check Java version: `java -version` (should be 17 or 21)
+- Verify Gradle wrapper: `./gradlew --version`
+- Clean build: `./gradlew clean`
+- Check `gradle.properties` for configuration issues
+
+### CI/CD Build Issues
+
+- Check workflow logs in GitHub Actions
+- Verify all required secrets are set
+- Check if Android SDK setup completed successfully
+- Review build logs artifact for detailed error messages
+
+## Configuration
+
+### Current Configuration
+
+Configuration is currently hardcoded in the app. Future versions will support:
+- YAML configuration files
+- Runtime configuration updates
+- Server endpoint configuration
+
+### Environment Variables
+
+For local development, you may need:
+- `ANDROID_HOME`: Path to Android SDK
+- `ANDROID_SDK_ROOT`: Path to Android SDK (alternative)
+- `JAVA_HOME`: Path to JDK (usually set automatically)
+
+### Gradle Properties
+
+Key properties in `gradle.properties`:
+- `VERSION_NAME`: Application version name
+- `VERSION_CODE`: Application version code
+- `org.gradle.parallel`: Enable parallel task execution
+- `org.gradle.caching`: Enable build cache
+- `org.gradle.vfs.watch`: Enable file system watching
 
 ## Getting Help
 

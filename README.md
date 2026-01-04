@@ -3,9 +3,15 @@
 [![Build Status](https://github.com/eSlider/geo-spider-app/workflows/Build%20Android%20APK/badge.svg)](https://github.com/eSlider/geo-spider-app/actions/workflows/build-android-apk.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-blue.svg)](https://kotlinlang.org)
+[![Kotlin Multiplatform](https://img.shields.io/badge/Kotlin%20Multiplatform-2.0.21-purple.svg)](https://kotlinlang.org/docs/multiplatform.html)
 [![Android](https://img.shields.io/badge/Android-5.0%2B-green.svg)](https://www.android.com)
-[![Gradle](https://img.shields.io/badge/Gradle-8.0%2B-blue.svg)](https://gradle.org)
+[![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-1.7-blue.svg)](https://developer.android.com/jetpack/compose)
+[![Gradle](https://img.shields.io/badge/Gradle-8.9-blue.svg)](https://gradle.org)
+[![JDK](https://img.shields.io/badge/JDK-21-orange.svg)](https://adoptium.net)
 [![Latest Release](https://img.shields.io/github/v/release/eSlider/geo-spider-app?include_prereleases&sort=semver)](https://github.com/eSlider/geo-spider-app/releases/latest)
+[![GitHub Issues](https://img.shields.io/github/issues/eSlider/geo-spider-app)](https://github.com/eSlider/geo-spider-app/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/eSlider/geo-spider-app)](https://github.com/eSlider/geo-spider-app/pulls)
+[![GitHub Stars](https://img.shields.io/github/stars/eSlider/geo-spider-app?style=social)](https://github.com/eSlider/geo-spider-app/stargazers)
 
 A sophisticated GPS/GLONASS location tracking Android application built with Kotlin Multiplatform and Jetpack Compose.
 
@@ -283,57 +289,17 @@ To create a release manually:
 
 ## Development
 
-### Project Structure
+For detailed development information, setup instructions, coding guidelines, and troubleshooting, please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-- **shared/src/commonMain**: Shared business logic, data models, interfaces
-- **shared/src/androidMain**: Android-specific implementations (location provider, etc.)
-- **androidApp**: Android application with Compose UI
+### Quick Start for Developers
 
-### Key Components
-
-- `LocationData`: Location data model with validation
-- `AppConfig`: Application configuration
-- `LocationService`: Location service interface and implementation
-- `AndroidLocationProvider`: Android-specific location provider
-
-### Code Style
-
-See [.cursorrules](.cursorrules) for detailed coding guidelines and best practices.
-
-### Configuration
-
-Configuration is currently hardcoded in the app. Future versions will support:
-- YAML configuration files
-- Runtime configuration updates
-- Server endpoint configuration
-
-### Building Locally
-
-**With Docker (Recommended):**
-1. Ensure Docker is installed and running
-2. Build: `./bin/build-docker.sh`
-
-**Without Docker:**
-1. Ensure prerequisites are met (see Prerequisites section)
-2. Set up Android SDK (set `ANDROID_HOME` or create `local.properties`)
-3. Accept Android SDK licenses: `./bin/accept-android-licenses.sh`
-4. Build: `./bin/build-apk.sh`
-
-### Troubleshooting
-
-**Build fails with "SDK licenses not accepted"**:
-```bash
-./bin/accept-android-licenses.sh
-```
-
-**Build fails with "Android SDK not found"**:
-- Set `ANDROID_HOME` environment variable
-- Or create `local.properties` with: `sdk.dir=/path/to/android/sdk`
-
-**APK not found after build**:
-- Check build logs in `var/logs/`
-- Verify Android SDK is properly configured
-- Check GitHub Actions logs for CI/CD builds
+1. **Fork and clone** the repository
+2. **Set up development environment** (see [CONTRIBUTING.md](CONTRIBUTING.md#development-setup))
+3. **Build the project**:
+   ```bash
+   ./bin/build-apk.sh
+   ```
+4. **Read the guidelines** in [CONTRIBUTING.md](CONTRIBUTING.md) before making changes
 
 ## Contributing
 
