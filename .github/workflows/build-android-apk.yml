@@ -101,7 +101,6 @@ jobs:
     - name: Create GitHub Release
       if: success() && github.ref == 'refs/heads/main'
       uses: softprops/action-gh-release@v1
-      continue-on-error: true
       with:
         tag_name: ${{ steps.version.outputs.version-tag }}
         name: Release ${{ steps.version.outputs.version-name }}
