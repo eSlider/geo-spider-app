@@ -101,15 +101,18 @@ jobs:
           -e CI=true \
           $DOCKER_IMAGE \
           bash -c "
-            set -e
             # Ensure directories exist and are writable
             mkdir -p /home/androidusr/workspace/build-outputs /home/androidusr/workspace/var/logs
             chmod -R 777 /home/androidusr/workspace/build-outputs /home/androidusr/workspace/var/logs || true
             # Fix Gradle wrapper permissions
+            mkdir -p /home/androidusr/.gradle/wrapper/dists
             chmod -R 777 /home/androidusr/.gradle 2>/dev/null || true
             
             # Make gradlew executable
             chmod +x ./gradlew || true
+            
+            # Set error handling after directory setup
+            set -e
             
             # docker-android has Android SDK pre-installed at /opt/android
             export ANDROID_HOME=\${ANDROID_HOME:-/opt/android}
