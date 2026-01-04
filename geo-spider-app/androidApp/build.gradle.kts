@@ -4,12 +4,6 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose") version "2.0.21"
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-}
-
 android {
     namespace = "com.geospider.android"
     compileSdk = 35
