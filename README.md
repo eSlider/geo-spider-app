@@ -1,5 +1,12 @@
 # Geo Spider App - Kotlin Multiplatform
 
+[![Build Status](https://github.com/eSlider/geo-spider-app/workflows/Build%20Android%20APK/badge.svg)](https://github.com/eSlider/geo-spider-app/actions/workflows/build-android-apk.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-blue.svg)](https://kotlinlang.org)
+[![Android](https://img.shields.io/badge/Android-5.0%2B-green.svg)](https://www.android.com)
+[![Gradle](https://img.shields.io/badge/Gradle-8.0%2B-blue.svg)](https://gradle.org)
+[![Latest Release](https://img.shields.io/github/v/release/eSlider/geo-spider-app?include_prereleases&sort=semver)](https://github.com/eSlider/geo-spider-app/releases/latest)
+
 A sophisticated GPS/GLONASS location tracking Android application built with Kotlin Multiplatform and Jetpack Compose.
 
 ## Project Status
