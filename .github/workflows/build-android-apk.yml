@@ -27,6 +27,21 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
+    - name: Cache Gradle dependencies
+      uses: actions/cache@v4
+      id: gradle-cache
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    - name: Set Gradle cache path
+      run: |
+        echo "GRADLE_USER_HOME=$HOME/.gradle" >> $GITHUB_ENV
+
     - name: Calculate Next Version from Git Tags
       id: version
       run: |
@@ -83,16 +98,18 @@ jobs:
         # Image contains: Android SDK, Java 17, build tools - everything pre-configured
         DOCKER_IMAGE="budtmo/docker-android:emulator_14.0"
         
-        # Pull the image
-        docker pull $DOCKER_IMAGE
+        # Pull the image with caching
+        # Docker automatically caches pulled images, but we can also use buildx for better caching
+        docker pull $DOCKER_IMAGE || docker buildx imagetools inspect $DOCKER_IMAGE || true
         
         # Run build inside Docker container
         # docker-android uses /home/androidusr as user home
         # Override entrypoint to skip emulator startup for build-only
+        # Mount Gradle cache from GitHub Actions cache (faster than Docker volumes)
         docker run --rm \
           --entrypoint="/bin/bash" \
           -v "${{ github.workspace }}":/home/androidusr/workspace \
-          -v gradle-cache:/home/androidusr/.gradle \
+          -v "${{ env.GRADLE_USER_HOME }}":/home/androidusr/.gradle \
           -w /home/androidusr/workspace \
           -e VERSION_NAME="$VERSION_NAME" \
           -e VERSION_CODE="$VERSION_CODE" \
