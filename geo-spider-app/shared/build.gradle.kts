@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.sqldelight)
     id("com.android.library")
 }
 
@@ -29,6 +30,8 @@ kotlin {
             dependencies {
                 implementation(libs.ktor.client.android)
                 implementation(libs.androidx.core.ktx)
+                implementation(libs.sqldelight.android.driver)
+                implementation(libs.sqldelight.coroutines.extensions)
             }
         }
     }
@@ -45,5 +48,13 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+sqldelight {
+    databases {
+        create("GeoSpiderDatabase") {
+            packageName.set("com.geospider.shared.database")
+        }
     }
 }

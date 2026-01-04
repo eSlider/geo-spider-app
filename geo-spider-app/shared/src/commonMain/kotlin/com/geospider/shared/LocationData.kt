@@ -19,4 +19,31 @@ data class LocationData(
         require(provider.isNotBlank()) { "Provider cannot be blank" }
         require(accuracy >= 0) { "Accuracy must be non-negative" }
     }
+    
+    /**
+     * Converts LocationData to GeoJSON Point
+     */
+    fun toGeoJsonPoint(): GeoJsonPoint {
+        val coordinates = mutableListOf(longitude, latitude)
+        if (altitude != 0.0) {
+            coordinates.add(altitude)
+        }
+        return GeoJsonPoint(coordinates = coordinates)
+    }
+    
+    /**
+     * Converts LocationData to GeoJSON Feature
+     */
+    fun toGeoJsonFeature(): GeoJsonFeature {
+        return GeoJsonFeature(
+            geometry = toGeoJsonPoint(),
+            properties = mapOf(
+                "accuracy" to accuracy.toString(),
+                "speed" to speed.toString(),
+                "bearing" to bearing.toString(),
+                "timestamp" to timestamp.toString(),
+                "provider" to provider
+            )
+        )
+    }
 }

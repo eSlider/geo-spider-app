@@ -36,6 +36,10 @@ android {
     
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += listOf(
+            "-opt-in=kotlin.RequiresOptIn",
+            "-Xjvm-default=all"
+        )
     }
     
     buildFeatures {
@@ -57,6 +61,8 @@ dependencies {
     
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
+    // Ensure compose runtime is on classpath for compiler
+    implementation("androidx.compose.runtime:runtime")
     
     implementation(libs.coroutines.android)
     

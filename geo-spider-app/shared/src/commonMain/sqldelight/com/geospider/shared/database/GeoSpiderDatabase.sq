@@ -1,0 +1,59 @@
+CREATE TABLE location_data (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    latitude REAL NOT NULL,
+    longitude REAL NOT NULL,
+    accuracy REAL NOT NULL,
+    altitude REAL NOT NULL,
+    speed REAL NOT NULL,
+    bearing REAL NOT NULL,
+    timestamp INTEGER NOT NULL,
+    provider TEXT NOT NULL,
+    synced INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE INDEX location_data_timestamp ON location_data(timestamp);
+CREATE INDEX location_data_synced ON location_data(synced);
+
+insertLocation:
+INSERT INTO location_data (
+    latitude,
+    longitude,
+    accuracy,
+    altitude,
+    speed,
+    bearing,
+    timestamp,
+    provider,
+    synced
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0);
+
+getAllLocations:
+SELECT * FROM location_data ORDER BY timestamp DESC;
+
+getUnsyncedLocations:
+SELECT * FROM location_data WHERE synced = 0 ORDER BY timestamp ASC;
+
+getUnsyncedLocationIds:
+SELECT id FROM location_data WHERE synced = 0 ORDER BY timestamp ASC;
+
+getLocationCount:
+SELECT COUNT(*) FROM location_data;
+
+getUnsyncedCount:
+SELECT COUNT(*) FROM location_data WHERE synced = 0;
+
+lastInsertRowId:
+SELECT last_insert_rowid();
+
+markAsSynced:
+UPDATE location_data SET synced = 1 WHERE id = ?;
+
+deleteLocation:
+DELETE FROM location_data WHERE id = ?;
+
+deleteSyncedLocations:
+DELETE FROM location_data WHERE synced = 1;
+
+clearAllLocations:
+DELETE FROM location_data;
+

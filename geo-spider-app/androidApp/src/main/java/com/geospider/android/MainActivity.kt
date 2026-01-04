@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.rememberCoroutineScope
 import com.geospider.shared.AndroidLocationProvider
+import com.geospider.shared.AndroidLocationRepository
 import com.geospider.shared.LocationServiceImpl
 import kotlinx.coroutines.launch
 
@@ -41,11 +42,19 @@ fun GeoSpiderApp() {
     
     val locationProvider = remember { AndroidLocationProvider(context) }
     val locationService = remember { LocationServiceImpl(locationProvider) }
+    val locationRepository = remember { AndroidLocationRepository(context) }
     
     var serviceStatus by remember { mutableStateOf("Stopped") }
-    var dataCount by remember { mutableStateOf(0) }
+    var dataCount by remember { mutableStateOf(0L) }
+    var unsyncedCount by remember { mutableStateOf(0L) }
     var networkStatus by remember { mutableStateOf("Online") }
     var lastLocation by remember { mutableStateOf<String?>(null) }
+    
+    // Load initial counts
+    LaunchedEffect(Unit) {
+        dataCount = locationRepository.getLocationCount()
+        unsyncedCount = locationRepository.getUnsyncedCount()
+    }
 
     Column(
         modifier = Modifier
@@ -117,6 +126,21 @@ fun GeoSpiderApp() {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    Text("Unsynced:")
+                    Text(
+                        text = unsyncedCount.toString(),
+                        fontWeight = FontWeight.Medium,
+                        color = if (unsyncedCount > 0) 
+                            MaterialTheme.colorScheme.error 
+                        else 
+                            MaterialTheme.colorScheme.primary
+                    )
+                }
+                
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     Text("Network:")
                     Text(
                         text = networkStatus,
@@ -137,7 +161,9 @@ fun GeoSpiderApp() {
                 scope.launch {
                     val location = locationService.getCurrentLocation()
                     if (location != null) {
-                        dataCount++
+                        locationRepository.insertLocation(location)
+                        dataCount = locationRepository.getLocationCount()
+                        unsyncedCount = locationRepository.getUnsyncedCount()
                         lastLocation = "${location.latitude}, ${location.longitude}"
                     }
                 }
@@ -163,13 +189,26 @@ fun GeoSpiderApp() {
         }
 
         Button(
-            onClick = { /* Sync action */ },
+            onClick = {
+                scope.launch {
+                    val geoJson = locationRepository.getUnsyncedGeoJsonFeatureCollection()
+                    // TODO: Send geoJson to server via HTTP request
+                    // For now, just mark as synced for demo purposes
+                    val unsyncedIds = locationRepository.getUnsyncedLocationIds()
+                    if (unsyncedIds.isNotEmpty()) {
+                        // In real implementation, mark as synced only after successful server sync
+                        locationRepository.markBatchAsSynced(unsyncedIds)
+                        unsyncedCount = locationRepository.getUnsyncedCount()
+                    }
+                }
+            },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.secondary
-            )
+            ),
+            enabled = unsyncedCount > 0
         ) {
-            Text("Sync Data Now")
+            Text("Sync Data Now (${unsyncedCount} unsynced)")
         }
         
         if (lastLocation != null) {
