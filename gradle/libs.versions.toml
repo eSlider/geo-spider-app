@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.0.21"
-androidGradlePlugin = "8.7.3"
+androidGradlePlugin = "8.8.0"
 compose = "2024.02.00"
 composeCompiler = "1.5.15"
 coroutines = "1.9.0"
