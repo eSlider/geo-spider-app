@@ -24,12 +24,13 @@ if ! docker info &> /dev/null; then
     exit 1
 fi
 
-# Use pre-built Android SDK image from MobileDevOps
-# Reference: https://github.com/MobileDevOps/android-sdk-image
-DOCKER_IMAGE="mobiledevops/android-sdk-image:34.0.0"
+# Use docker-android image from budtmo
+# Reference: https://github.com/budtmo/docker-android
+DOCKER_IMAGE="budtmo/docker-android:emulator_14.0"
 
-echo "📦 Using pre-built Android SDK image: $DOCKER_IMAGE"
-echo "   Image contains: Android SDK, Gradle 8.2, build tools, and platforms"
+echo "📦 Using docker-android image: $DOCKER_IMAGE"
+echo "   Image contains: Android SDK, build tools, and platforms"
+echo "   Reference: https://github.com/budtmo/docker-android"
 echo ""
 
 # Pull the image (will use cache if already exists)
@@ -47,22 +48,36 @@ echo "📌 Building with version: $VERSION_NAME (code: $VERSION_CODE)"
 echo ""
 
 # Run build inside Docker container
+# docker-android uses /home/androidusr as user home
+# Override entrypoint to skip emulator startup for build-only
 docker run --rm \
-    -v "$PROJECT_ROOT":/app \
-    -v geospider-gradle-cache:/home/mobiledevops/.gradle \
-    -w /app \
+    --entrypoint="" \
+    -v "$PROJECT_ROOT":/home/androidusr/workspace \
+    -v geospider-gradle-cache:/home/androidusr/.gradle \
+    -w /home/androidusr/workspace \
     -e VERSION_NAME="$VERSION_NAME" \
     -e VERSION_CODE="$VERSION_CODE" \
     -e CI=false \
     $DOCKER_IMAGE \
     bash -c "
-        echo '📱 Accepting Android SDK licenses...'
-        yes | \$ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME --licenses || true
+        export ANDROID_HOME=\${ANDROID_HOME:-/opt/android}
+        export ANDROID_SDK_ROOT=\${ANDROID_SDK_ROOT:-/opt/android}
         
-        echo '📦 Installing additional SDK components (API 35, build-tools 35.0.0)...'
-        \$ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME \
-            'platforms;android-35' \
-            'build-tools;35.0.0' || true
+        echo '📱 Accepting Android SDK licenses...'
+        if [ -f \"\$ANDROID_HOME/cmdline-tools/bin/sdkmanager\" ]; then
+          yes | \$ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME --licenses || true
+          
+          echo '📦 Installing additional SDK components (API 35, build-tools 35.0.0)...'
+          \$ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME \
+              'platforms;android-35' \
+              'build-tools;35.0.0' || true
+        elif [ -f \"\$ANDROID_HOME/tools/bin/sdkmanager\" ]; then
+          # Try alternative location
+          yes | \$ANDROID_HOME/tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME --licenses || true
+          \$ANDROID_HOME/tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME \
+              'platforms;android-35' \
+              'build-tools;35.0.0' || true
+        fi
         
         echo '🔨 Building APK...'
         ./gradlew :androidApp:assembleRelease \
@@ -79,8 +94,8 @@ docker run --rm \
         fi
         
         # Copy APK to build-outputs (ensure directory is writable)
-        mkdir -p /app/build-outputs
-        cp \"\$APK_FILE\" /app/build-outputs/ || cp \"\$APK_FILE\" /app/build-outputs/\$(basename \"\$APK_FILE\")
+        mkdir -p /home/androidusr/workspace/build-outputs
+        cp \"\$APK_FILE\" /home/androidusr/workspace/build-outputs/ || cp \"\$APK_FILE\" /home/androidusr/workspace/build-outputs/\$(basename \"\$APK_FILE\")
         echo \"✅ APK built: \$APK_FILE\"
         echo \"📦 APK size: \$(du -h \"\$APK_FILE\" | cut -f1)\"
     "

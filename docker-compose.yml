@@ -2,23 +2,23 @@ version: '3.8'
 
 services:
   android-builder:
-    # Use pre-built Android SDK image from MobileDevOps
-    # Reference: https://github.com/MobileDevOps/android-sdk-image
-    image: mobiledevops/android-sdk-image:34.0.0
+    # Use docker-android image from budtmo
+    # Reference: https://github.com/budtmo/docker-android
+    image: budtmo/docker-android:emulator_14.0
     container_name: geospider-builder
     volumes:
       # Mount project directory
-      - .:/app
+      - .:/home/androidusr/workspace
       # Persist Gradle cache
-      - gradle-cache:/home/mobiledevops/.gradle
+      - gradle-cache:/home/androidusr/.gradle
       # Mount build outputs
-      - ./build-outputs:/app/build-outputs
+      - ./build-outputs:/home/androidusr/workspace/build-outputs
     environment:
-      - ANDROID_HOME=/opt/android-sdk
-      - ANDROID_SDK_ROOT=/opt/android-sdk
-      - GRADLE_USER_HOME=/home/mobiledevops/.gradle
+      - ANDROID_HOME=/opt/android
+      - ANDROID_SDK_ROOT=/opt/android
+      - GRADLE_USER_HOME=/home/androidusr/.gradle
       - CI=false
-    working_dir: /app
+    working_dir: /home/androidusr/workspace
     # Override default command to keep container running
     command: tail -f /dev/null
 

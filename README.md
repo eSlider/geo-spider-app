@@ -80,7 +80,7 @@ Use Docker for consistent, reproducible builds:
 ./bin/build-docker.sh
 ```
 
-This script uses the pre-built [mobiledevops/android-sdk-image](https://github.com/MobileDevOps/android-sdk-image) Docker image which contains:
+This script uses the [budtmo/docker-android](https://github.com/budtmo/docker-android) Docker image which contains:
 - Android SDK with command-line tools
 - Gradle 8.2
 - Android SDK platforms and build tools
@@ -100,7 +100,7 @@ The script will:
 - No need to install Android SDK locally
 - Isolated build environment
 - Faster CI/CD pipelines (uses pre-built image)
-- Well-maintained and tested Docker image
+- Well-maintained and actively updated Docker image (13.9k+ stars)
 
 ### Build APK Locally (Without Docker)
 
@@ -231,7 +231,7 @@ The project uses GitHub Actions with Docker for automated builds and releases.
 
 **Docker-based CI/CD Benefits**:
 - Consistent build environment across all runs
-- Faster builds using pre-built [mobiledevops/android-sdk-image](https://github.com/MobileDevOps/android-sdk-image)
+- Faster builds using pre-built [budtmo/docker-android](https://github.com/budtmo/docker-android)
 - Isolated build environment
 - Easy to reproduce builds locally
 - No need to manage Android SDK versions in CI
