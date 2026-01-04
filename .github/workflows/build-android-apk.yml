@@ -91,8 +91,9 @@ jobs:
         # Run build inside Docker container
         # docker-android uses /home/androidusr as user home
         # Override entrypoint to skip emulator startup for build-only
+        # Use bash as entrypoint instead of empty to ensure proper shell
         docker run --rm \
-          --entrypoint="" \
+          --entrypoint="/bin/bash" \
           -v "${{ github.workspace }}":/home/androidusr/workspace \
           -v gradle-cache:/home/androidusr/.gradle \
           -w /home/androidusr/workspace \
@@ -100,7 +101,7 @@ jobs:
           -e VERSION_CODE="$VERSION_CODE" \
           -e CI=true \
           $DOCKER_IMAGE \
-          bash -c "
+          -c "
             # Ensure directories exist and are writable
             mkdir -p /home/androidusr/workspace/build-outputs /home/androidusr/workspace/var/logs
             chmod -R 777 /home/androidusr/workspace/build-outputs /home/androidusr/workspace/var/logs || true
