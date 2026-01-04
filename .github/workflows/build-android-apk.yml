@@ -136,20 +136,22 @@ jobs:
             
             # Build APK with version parameters
             echo \"🔨 Starting Gradle build...\"
-            ./gradlew :androidApp:assembleRelease \
+            echo \"Working directory: \$(pwd)\"
+            echo \"Gradle wrapper: \$(ls -la ./gradlew 2>/dev/null || echo 'NOT FOUND')\"
+            
+            if ./gradlew :androidApp:assembleRelease \
               -PVERSION_NAME=\"\$VERSION_NAME\" \
               -PVERSION_CODE=\"\$VERSION_CODE\" \
               --no-daemon \
-              --stacktrace
-            
-            # Check if build was successful
-            if [ \$? -ne 0 ]; then
-              echo \"❌ Build failed!\"
+              --stacktrace; then
+              echo \"✅ Gradle build completed successfully\"
+            else
+              BUILD_EXIT_CODE=\$?
+              echo \"❌ Build failed with exit code: \$BUILD_EXIT_CODE\"
               echo \"Checking build directory...\"
               ls -la geo-spider-app/androidApp/build/outputs/ || true
-              exit 1
+              exit \$BUILD_EXIT_CODE
             fi
-            echo \"✅ Gradle build completed successfully\"
             
             # Find and copy APK to build-outputs
             APK_FILE=\$(find geo-spider-app/androidApp/build/outputs/apk/release -name \"*.apk\" | head -1)
