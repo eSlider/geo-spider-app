@@ -79,19 +79,16 @@ jobs:
         mkdir -p build-outputs
         
         # Use docker-android image from budtmo
-        # Image contains: Android SDK, build tools, and platforms
         # Reference: https://github.com/budtmo/docker-android
-        # Using emulator_14.0 (API 34) - can build Android projects
+        # Image contains: Android SDK, Java 17, build tools - everything pre-configured
         DOCKER_IMAGE="budtmo/docker-android:emulator_14.0"
         
-        # Pull the image (with caching)
+        # Pull the image
         docker pull $DOCKER_IMAGE
         
-        # Install additional SDK components if needed (API 35, build-tools 35.0.0)
         # Run build inside Docker container
         # docker-android uses /home/androidusr as user home
         # Override entrypoint to skip emulator startup for build-only
-        # Use bash as entrypoint instead of empty to ensure proper shell
         docker run --rm \
           --entrypoint="/bin/bash" \
           -v "${{ github.workspace }}":/home/androidusr/workspace \
@@ -104,55 +101,19 @@ jobs:
           -c "
             # Ensure directories exist and are writable
             mkdir -p /home/androidusr/workspace/build-outputs /home/androidusr/workspace/var/logs
-            chmod -R 777 /home/androidusr/workspace/build-outputs /home/androidusr/workspace/var/logs || true
-            # Fix Gradle wrapper permissions
             mkdir -p /home/androidusr/.gradle/wrapper/dists
-            chmod -R 777 /home/androidusr/.gradle 2>/dev/null || true
+            chmod -R 777 /home/androidusr/workspace/build-outputs /home/androidusr/workspace/var/logs /home/androidusr/.gradle 2>/dev/null || true
             
             # Make gradlew executable
             chmod +x ./gradlew || true
             
-            # Set error handling after directory setup
-            set -e
-            
-            # docker-android has Android SDK pre-installed at /opt/android
-            export ANDROID_HOME=\${ANDROID_HOME:-/opt/android}
-            export ANDROID_SDK_ROOT=\${ANDROID_SDK_ROOT:-/opt/android}
-            
-            # Accept Android SDK licenses if needed
-            if [ -f \"\$ANDROID_HOME/cmdline-tools/bin/sdkmanager\" ]; then
-              yes | \$ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME --licenses || true
-              
-              # Install additional SDK components if needed (API 35, build-tools 35.0.0)
-              \$ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME \
-                'platforms;android-35' \
-                'build-tools;35.0.0' || true
-            elif [ -f \"\$ANDROID_HOME/tools/bin/sdkmanager\" ]; then
-              # Try alternative location
-              yes | \$ANDROID_HOME/tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME --licenses || true
-              \$ANDROID_HOME/tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME \
-                'platforms;android-35' \
-                'build-tools;35.0.0' || true
-            fi
-            
-            # Build APK with version parameters
-            echo \"🔨 Starting Gradle build...\"
-            echo \"Working directory: \$(pwd)\"
-            echo \"Gradle wrapper: \$(ls -la ./gradlew 2>/dev/null || echo 'NOT FOUND')\"
-            
-            if ./gradlew :androidApp:assembleRelease \
+            # Build APK - gradlew handles everything (SDK, Java, etc. are pre-configured in image)
+            echo '🔨 Building APK with Gradle...'
+            ./gradlew :androidApp:assembleRelease \
               -PVERSION_NAME=\"\$VERSION_NAME\" \
               -PVERSION_CODE=\"\$VERSION_CODE\" \
               --no-daemon \
-              --stacktrace; then
-              echo \"✅ Gradle build completed successfully\"
-            else
-              BUILD_EXIT_CODE=\$?
-              echo \"❌ Build failed with exit code: \$BUILD_EXIT_CODE\"
-              echo \"Checking build directory...\"
-              ls -la geo-spider-app/androidApp/build/outputs/ || true
-              exit \$BUILD_EXIT_CODE
-            fi
+              --stacktrace
             
             # Find and copy APK to build-outputs
             APK_FILE=\$(find geo-spider-app/androidApp/build/outputs/apk/release -name \"*.apk\" | head -1)
@@ -164,7 +125,7 @@ jobs:
             fi
             echo \"✅ APK file found: \$APK_FILE\"
             
-            # Copy APK to build-outputs with original filename
+            # Copy APK to build-outputs
             APK_NAME=\$(basename \"\$APK_FILE\")
             cp \"\$APK_FILE\" /home/androidusr/workspace/build-outputs/\$APK_NAME
             echo \"APK size: \$(du -h \"\$APK_FILE\" | cut -f1)\"

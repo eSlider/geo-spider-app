@@ -1,6 +1,7 @@
 #!/bin/bash
 # Build Android APK using Docker
-# This script builds the APK inside a Docker container for consistent builds
+# Uses budtmo/docker-android image - everything is pre-configured
+# Reference: https://github.com/budtmo/docker-android
 
 set -e
 
@@ -29,7 +30,7 @@ fi
 DOCKER_IMAGE="budtmo/docker-android:emulator_14.0"
 
 echo "📦 Using docker-android image: $DOCKER_IMAGE"
-echo "   Image contains: Android SDK, build tools, and platforms"
+echo "   Image contains: Android SDK, Java 17, build tools"
 echo "   Reference: https://github.com/budtmo/docker-android"
 echo ""
 
@@ -51,7 +52,7 @@ echo ""
 # docker-android uses /home/androidusr as user home
 # Override entrypoint to skip emulator startup for build-only
 docker run --rm \
-    --entrypoint="" \
+    --entrypoint="/bin/bash" \
     -v "$PROJECT_ROOT":/home/androidusr/workspace \
     -v geospider-gradle-cache:/home/androidusr/.gradle \
     -w /home/androidusr/workspace \
@@ -59,43 +60,32 @@ docker run --rm \
     -e VERSION_CODE="$VERSION_CODE" \
     -e CI=false \
     $DOCKER_IMAGE \
-    bash -c "
-        export ANDROID_HOME=\${ANDROID_HOME:-/opt/android}
-        export ANDROID_SDK_ROOT=\${ANDROID_SDK_ROOT:-/opt/android}
+    -c "
+        # Make gradlew executable
+        chmod +x ./gradlew || true
         
-        echo '📱 Accepting Android SDK licenses...'
-        if [ -f \"\$ANDROID_HOME/cmdline-tools/bin/sdkmanager\" ]; then
-          yes | \$ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME --licenses || true
-          
-          echo '📦 Installing additional SDK components (API 35, build-tools 35.0.0)...'
-          \$ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME \
-              'platforms;android-35' \
-              'build-tools;35.0.0' || true
-        elif [ -f \"\$ANDROID_HOME/tools/bin/sdkmanager\" ]; then
-          # Try alternative location
-          yes | \$ANDROID_HOME/tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME --licenses || true
-          \$ANDROID_HOME/tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME \
-              'platforms;android-35' \
-              'build-tools;35.0.0' || true
-        fi
+        # Ensure build outputs directory exists
+        mkdir -p /home/androidusr/workspace/build-outputs
         
-        echo '🔨 Building APK...'
+        # Build APK - use gradlew which handles everything
+        echo '🔨 Building APK with Gradle...'
         ./gradlew :androidApp:assembleRelease \
             -PVERSION_NAME=\"\$VERSION_NAME\" \
             -PVERSION_CODE=\"\$VERSION_CODE\" \
             --no-daemon \
-            --stacktrace 2>&1 | tee var/logs/build_\$(date +%Y%m%d_%H%M%S).log || true
+            --stacktrace 2>&1 | tee var/logs/build_\$(date +%Y%m%d_%H%M%S).log
         
         # Find APK file
         APK_FILE=\$(find geo-spider-app/androidApp/build/outputs/apk/release -name \"*.apk\" | head -1)
         if [ -z \"\$APK_FILE\" ]; then
             echo '❌ APK file not found!'
+            echo 'Checking build outputs...'
+            ls -la geo-spider-app/androidApp/build/outputs/apk/release/ || true
             exit 1
         fi
         
-        # Copy APK to build-outputs (ensure directory is writable)
-        mkdir -p /home/androidusr/workspace/build-outputs
-        cp \"\$APK_FILE\" /home/androidusr/workspace/build-outputs/ || cp \"\$APK_FILE\" /home/androidusr/workspace/build-outputs/\$(basename \"\$APK_FILE\")
+        # Copy APK to build-outputs
+        cp \"\$APK_FILE\" /home/androidusr/workspace/build-outputs/
         echo \"✅ APK built: \$APK_FILE\"
         echo \"📦 APK size: \$(du -h \"\$APK_FILE\" | cut -f1)\"
     "
@@ -115,4 +105,3 @@ echo "📊 APK size: $(du -h "$APK_FILE" | cut -f1)"
 echo ""
 echo "💡 You can install the APK on your Android device:"
 echo "   adb install $APK_FILE"
-
