@@ -115,7 +115,17 @@ jobs:
           -e CI=true \
           $DOCKER_IMAGE \
           -c "
-            set -e
+            # Debug: Show environment
+            echo '📋 Environment:'
+            echo \"  User: \$(whoami)\"
+            echo \"  PWD: \$(pwd)\"
+            echo \"  Java: \$(java -version 2>&1 | head -1)\"
+            echo \"  ANDROID_HOME: \${ANDROID_HOME:-NOT SET}\"
+            echo \"  ANDROID_SDK_ROOT: \${ANDROID_SDK_ROOT:-NOT SET}\"
+            echo \"  Gradlew exists: \$(test -f ./gradlew && echo YES || echo NO)\"
+            echo \"  Gradle cache: \$(ls -ld /home/androidusr/.gradle 2>/dev/null || echo 'NOT ACCESSIBLE')\"
+            echo ''
+            
             # Make gradlew executable
             chmod +x ./gradlew || true
             
@@ -125,17 +135,13 @@ jobs:
             
             # Build APK - use gradlew which handles everything
             echo '🔨 Building APK with Gradle...'
+            set -e
             ./gradlew :androidApp:assembleRelease \
               -PVERSION_NAME=\"\$VERSION_NAME\" \
               -PVERSION_CODE=\"\$VERSION_CODE\" \
               --no-daemon \
-              --stacktrace 2>&1 | tee /home/androidusr/workspace/var/logs/build_\$(date +%Y%m%d_%H%M%S).log || {
-              BUILD_EXIT=\$?
-              echo \"❌ Build failed with exit code: \$BUILD_EXIT\"
-              echo \"Last 50 lines of log:\"
-              tail -50 /home/androidusr/workspace/var/logs/build_*.log 2>/dev/null || echo \"No log file found\"
-              exit \$BUILD_EXIT
-            }
+              --stacktrace 2>&1 | tee /home/androidusr/workspace/var/logs/build_\$(date +%Y%m%d_%H%M%S).log
+            set +e
             
             # Find APK file
             APK_FILE=\$(find geo-spider-app/androidApp/build/outputs/apk/release -name \"*.apk\" | head -1)
