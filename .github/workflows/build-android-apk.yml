@@ -96,19 +96,11 @@ jobs:
         # Build APK using Gradle
         # Performance optimizations are enabled via gradle.properties
         echo '🔨 Building APK with Gradle...'
-        if ./gradlew :androidApp:assembleRelease \
+        ./gradlew :androidApp:assembleRelease \
           -PVERSION_NAME="$VERSION_NAME" \
           -PVERSION_CODE="$VERSION_CODE" \
           --no-daemon \
-          --stacktrace 2>&1 | tee var/logs/build_$(date +%Y%m%d_%H%M%S).log; then
-          echo "✅ Gradle build completed successfully"
-        else
-          BUILD_EXIT=$?
-          echo "❌ Gradle build failed with exit code: $BUILD_EXIT"
-          echo "Checking for APK file anyway..."
-          find geo-spider-app/androidApp/build -name "*.apk" 2>/dev/null || echo "No APK files found"
-          exit $BUILD_EXIT
-        fi
+          --stacktrace 2>&1 | tee var/logs/build_$(date +%Y%m%d_%H%M%S).log
         
         # Find APK file
         APK_FILE=$(find geo-spider-app/androidApp/build/outputs/apk/release -name "*.apk" | head -1)
