@@ -115,7 +115,6 @@ jobs:
           -e CI=true \
           $DOCKER_IMAGE \
           -c "
-            set -e
             # Ensure directories exist and are writable
             mkdir -p /home/androidusr/workspace/build-outputs /home/androidusr/workspace/var/logs
             mkdir -p /home/androidusr/.gradle/wrapper/dists
@@ -130,23 +129,18 @@ jobs:
             echo \"  Working dir: \$(pwd)\"
             echo \"  Gradlew exists: \$(test -f ./gradlew && echo 'YES' || echo 'NO')\"
             echo \"  ANDROID_HOME: \${ANDROID_HOME:-not set}\"
+            echo \"  Gradle cache: \$(ls -la /home/androidusr/.gradle 2>/dev/null | head -3 || echo 'empty')\"
             
             # Build APK - gradlew handles everything (SDK, Java, etc. are pre-configured in image)
             echo '🔨 Building APK with Gradle...'
-            if ./gradlew :androidApp:assembleRelease \
+            set -e
+            ./gradlew :androidApp:assembleRelease \
               -PVERSION_NAME=\"\$VERSION_NAME\" \
               -PVERSION_CODE=\"\$VERSION_CODE\" \
               --no-daemon \
-              --stacktrace; then
-              echo \"✅ Gradle build completed\"
-            else
-              BUILD_EXIT=\$?
-              echo \"❌ Build failed with exit code: \$BUILD_EXIT\"
-              echo \"Checking build outputs...\"
-              find geo-spider-app/androidApp/build -name \"*.apk\" 2>/dev/null || true
-              ls -la geo-spider-app/androidApp/build/outputs/ 2>/dev/null || true
-              exit \$BUILD_EXIT
-            fi
+              --stacktrace
+            set +e
+            echo \"✅ Gradle build completed\"
             
             # Wait a moment for file system to sync
             sleep 1
