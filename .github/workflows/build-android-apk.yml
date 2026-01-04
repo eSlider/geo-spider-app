@@ -137,19 +137,19 @@ jobs:
             # Build APK - use gradlew which handles everything
             echo '🔨 Building APK with Gradle...'
             LOG_FILE=\"/home/androidusr/workspace/var/logs/build_\$(date +%Y%m%d_%H%M%S).log\"
-            if ./gradlew :androidApp:assembleRelease \
+            ./gradlew :androidApp:assembleRelease \
               -PVERSION_NAME=\"\$VERSION_NAME\" \
               -PVERSION_CODE=\"\$VERSION_CODE\" \
               --no-daemon \
-              --stacktrace 2>&1 | tee \"\$LOG_FILE\"; then
-              echo '✅ Gradle build succeeded'
-            else
-              BUILD_EXIT=\$?
-              echo \"❌ Build failed with exit code: \$BUILD_EXIT\"
+              --stacktrace 2>&1 | tee \"\$LOG_FILE\"
+            GRADLE_EXIT=\${PIPESTATUS[0]}
+            if [ \$GRADLE_EXIT -ne 0 ]; then
+              echo \"❌ Build failed with exit code: \$GRADLE_EXIT\"
               echo \"Last 100 lines of log:\"
               tail -100 \"\$LOG_FILE\" 2>/dev/null || echo \"Could not read log file\"
-              exit \$BUILD_EXIT
+              exit \$GRADLE_EXIT
             fi
+            echo '✅ Gradle build succeeded'
             
             # Find APK file
             APK_FILE=\$(find geo-spider-app/androidApp/build/outputs/apk/release -name \"*.apk\" | head -1)
