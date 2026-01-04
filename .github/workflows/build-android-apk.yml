@@ -98,9 +98,23 @@ jobs:
         retention-days: 30
         if-no-files-found: error
 
-    - name: Create GitHub Release
+    - name: Verify APK for Release
       if: success() && github.ref == 'refs/heads/main'
+      id: verify-apk
+      run: |
+        APK_FILE="${{ steps.build-apk.outputs.apk-path }}"
+        if [ ! -f "$APK_FILE" ]; then
+          echo "❌ APK file not found: $APK_FILE"
+          exit 1
+        fi
+        echo "✅ APK file verified: $APK_FILE"
+        echo "APK size: $(du -h "$APK_FILE" | cut -f1)"
+        echo "apk-exists=true" >> $GITHUB_OUTPUT
+
+    - name: Create GitHub Release
+      if: success() && github.ref == 'refs/heads/main' && steps.verify-apk.outputs.apk-exists == 'true'
       uses: softprops/action-gh-release@v1
+      continue-on-error: true
       with:
         tag_name: ${{ steps.version.outputs.version-tag }}
         name: Release ${{ steps.version.outputs.version-name }}
