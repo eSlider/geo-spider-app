@@ -7,7 +7,7 @@
 [![Android](https://img.shields.io/badge/Android-5.0%2B-green.svg)](https://www.android.com)
 [![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-1.7-blue.svg)](https://developer.android.com/jetpack/compose)
 [![Gradle](https://img.shields.io/badge/Gradle-8.9-blue.svg)](https://gradle.org)
-[![JDK](https://img.shields.io/badge/JDK-21-orange.svg)](https://adoptium.net)
+[![JDK](https://img.shields.io/badge/JDK-25-orange.svg)](https://adoptium.net)
 [![Latest Release](https://img.shields.io/github/v/release/eSlider/geo-spider-app?include_prereleases&sort=semver)](https://github.com/eSlider/geo-spider-app/releases/latest)
 [![GitHub Issues](https://img.shields.io/github/issues/eSlider/geo-spider-app)](https://github.com/eSlider/geo-spider-app/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/eSlider/geo-spider-app)](https://github.com/eSlider/geo-spider-app/pulls)
@@ -72,7 +72,7 @@ docs/                          # Documentation
 ### Option 2: Local Development Environment
 
 - **Android Studio**: Hedgehog (2023.1.1) or later
-- **JDK**: 17 or later
+- **JDK**: 25 (recommended) or 21+
 - **Android SDK**: API level 21+ (Android 5.0+)
 - **Gradle**: 8.0+
 
