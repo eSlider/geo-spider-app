@@ -53,20 +53,22 @@ gh repo edit "$REPO" --description "$DESCRIPTION" || {
 }
 
 info "Setting repository topics..."
-gh repo edit "$REPO" --add-topic "$(IFS=,; echo "${TOPICS[*]}")" || {
-    warn "Failed to update topics"
-}
+for topic in "${TOPICS[@]}"; do
+    gh repo edit "$REPO" --add-topic "$topic" || {
+        warn "Failed to add topic: $topic"
+    }
+done
 
 info "Repository settings updated!"
 echo ""
 info "Current repository information:"
-gh repo view "$REPO" --json description,homepageUrl,topics,isPrivate,visibility,defaultBranch | jq '{
+gh repo view "$REPO" --json description,homepageUrl,repositoryTopics,isPrivate,visibility,defaultBranchRef | jq '{
     description,
     homepageUrl,
-    topics,
+    topics: [.repositoryTopics[].name],
     isPrivate,
     visibility,
-    defaultBranch
+    defaultBranch: .defaultBranchRef.name
 }'
 
 echo ""
@@ -80,4 +82,5 @@ echo "  --enable-projects      # Enable projects"
 echo "  --enable-wiki              # Enable wiki"
 echo "  --enable-discussions      # Enable discussions"
 echo "  --default-branch <name>   # Set default branch"
+
 

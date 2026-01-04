@@ -97,9 +97,13 @@ jobs:
           -e CI=true \
           $DOCKER_IMAGE \
           bash -c "
+            set -e
             # Ensure directories exist and are writable
             mkdir -p /app/build-outputs /app/var/logs
             chmod -R 777 /app/build-outputs /app/var/logs || true
+            
+            # Make gradlew executable
+            chmod +x ./gradlew || true
             
             # Accept Android SDK licenses
             yes | \$ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME --licenses || true
@@ -114,7 +118,12 @@ jobs:
               -PVERSION_NAME=\"\$VERSION_NAME\" \
               -PVERSION_CODE=\"\$VERSION_CODE\" \
               --no-daemon \
-              --stacktrace
+              --stacktrace || {
+                echo \"❌ Build failed!\"
+                echo \"Checking build directory...\"
+                ls -la geo-spider-app/androidApp/build/outputs/ || true
+                exit 1
+              }
             
             # Find and copy APK to build-outputs
             APK_FILE=\$(find geo-spider-app/androidApp/build/outputs/apk/release -name \"*.apk\" | head -1)
