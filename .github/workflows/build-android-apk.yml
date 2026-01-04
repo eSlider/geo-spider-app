@@ -99,6 +99,7 @@ jobs:
           -e CI=true \
           $DOCKER_IMAGE \
           -c "
+            set -e
             # Ensure directories exist and are writable
             mkdir -p /home/androidusr/workspace/build-outputs /home/androidusr/workspace/var/logs
             mkdir -p /home/androidusr/.gradle/wrapper/dists
@@ -107,13 +108,25 @@ jobs:
             # Make gradlew executable
             chmod +x ./gradlew || true
             
+            # Verify environment
+            echo '📋 Environment check:'
+            echo \"  Java: \$(java -version 2>&1 | head -1)\"
+            echo \"  Working dir: \$(pwd)\"
+            echo \"  Gradlew exists: \$(test -f ./gradlew && echo 'YES' || echo 'NO')\"
+            echo \"  ANDROID_HOME: \${ANDROID_HOME:-not set}\"
+            
             # Build APK - gradlew handles everything (SDK, Java, etc. are pre-configured in image)
             echo '🔨 Building APK with Gradle...'
             ./gradlew :androidApp:assembleRelease \
               -PVERSION_NAME=\"\$VERSION_NAME\" \
               -PVERSION_CODE=\"\$VERSION_CODE\" \
               --no-daemon \
-              --stacktrace
+              --stacktrace || {
+                echo \"❌ Build failed with exit code: \$?\"
+                echo \"Checking for errors...\"
+                ls -la geo-spider-app/androidApp/build/outputs/ || true
+                exit 1
+              }
             
             # Find and copy APK to build-outputs
             APK_FILE=\$(find geo-spider-app/androidApp/build/outputs/apk/release -name \"*.apk\" | head -1)
