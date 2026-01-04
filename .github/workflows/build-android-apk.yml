@@ -32,6 +32,9 @@ jobs:
         cache: 'gradle'
 
     - name: Set up Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Install Android packages with caching
       uses: maxim-lobanov/setup-android-tools@v1
       with:
         packages: |
