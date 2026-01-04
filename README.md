@@ -162,13 +162,14 @@ The project uses GitHub Actions for automated builds and releases.
 - Manual workflow dispatch
 
 **What it does**:
-1. Sets up JDK 17 and Android SDK
-2. Caches Gradle dependencies
-3. Builds the release APK
-4. Uploads build logs (7 days retention)
-5. Uploads APK artifact (30 days retention)
-6. Creates git tag (main branch only)
-7. Creates GitHub release (main branch only)
+1. Sets up JDK 17 and Android SDK (with caching for faster builds)
+2. Caches Gradle dependencies and Android SDK components
+3. Calculates next version from git tags
+4. Builds the release APK with calculated version
+5. Uploads build logs (7 days retention)
+6. Uploads APK artifact (30 days retention)
+7. Creates git tag (main branch only)
+8. Creates GitHub release (main branch only)
 
 ### Monitoring Workflows
 
@@ -218,28 +219,6 @@ To create a release manually:
 
 ### Project Structure
 
-- **shared/commonMain**: Shared business logic, data models, interfaces
-- **shared/androidMain**: Android-specific implementations (location provider, etc.)
-- **androidApp**: Android application with Compose UI
-
-### Key Components
-
-- `LocationData`: Location data model with validation
-- `AppConfig`: Application configuration
-- `LocationService`: Location service interface and implementation
-- `AndroidLocationProvider`: Android-specific location provider
-
-## Configuration
-
-Configuration is currently hardcoded in the app. Future versions will support:
-- YAML configuration files
-- Runtime configuration updates
-- Server endpoint configuration
-
-## Development
-
-### Project Structure
-
 - **shared/src/commonMain**: Shared business logic, data models, interfaces
 - **shared/src/androidMain**: Android-specific implementations (location provider, etc.)
 - **androidApp**: Android application with Compose UI
@@ -254,6 +233,13 @@ Configuration is currently hardcoded in the app. Future versions will support:
 ### Code Style
 
 See [.cursorrules](.cursorrules) for detailed coding guidelines and best practices.
+
+### Configuration
+
+Configuration is currently hardcoded in the app. Future versions will support:
+- YAML configuration files
+- Runtime configuration updates
+- Server endpoint configuration
 
 ### Building Locally
 
@@ -280,10 +266,18 @@ See [.cursorrules](.cursorrules) for detailed coding guidelines and best practic
 
 ## Contributing
 
-1. Follow the coding guidelines in `.cursorrules`
-2. Write tests for new features
-3. Update documentation as needed
-4. Ensure builds pass before submitting PRs
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
+
+**Quick start:**
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes following the [coding guidelines](.cursorrules)
+4. Write tests for new features
+5. Submit a pull request
+
+For detailed contribution guidelines, including development setup, coding standards, and pull request process, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+**Code of Conduct**: Please review our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
 
 ## License
 

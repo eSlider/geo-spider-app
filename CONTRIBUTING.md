@@ -4,7 +4,6 @@ Thank you for your interest in contributing to Geo Spider App! This document pro
 
 ## Table of Contents
 
-- [Code of Conduct](#code-of-conduct)
 - [Getting Started](#getting-started)
 - [Development Setup](#development-setup)
 - [Project Structure](#project-structure)
@@ -15,12 +14,7 @@ Thank you for your interest in contributing to Geo Spider App! This document pro
 - [Pull Request Process](#pull-request-process)
 - [Commit Message Guidelines](#commit-message-guidelines)
 
-## Code of Conduct
-
-- Be respectful and inclusive
-- Welcome newcomers and help them learn
-- Focus on constructive feedback
-- Follow the project's coding standards
+> **Note**: Please review our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
 
 ## Getting Started
 
@@ -386,6 +380,12 @@ Add detailed instructions for building the APK locally.
 - **Issues**: Open an issue on GitHub for bugs or feature requests
 - **Discussions**: Use GitHub Discussions for questions
 - **Documentation**: Check `README.md` and `docs/` directory
+
+## Additional Resources
+
+- [Code of Conduct](CODE_OF_CONDUCT.md) - Community guidelines and standards
+- [README.md](README.md) - Project overview and setup instructions
+- [.cursorrules](.cursorrules) - Detailed coding guidelines and best practices
 
 ## License
 
