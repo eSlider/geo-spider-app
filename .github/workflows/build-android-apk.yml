@@ -38,9 +38,6 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-
 
-    - name: Set Gradle cache path
-      run: |
-        echo "GRADLE_USER_HOME=$HOME/.gradle" >> $GITHUB_ENV
 
     - name: Calculate Next Version from Git Tags
       id: version
@@ -106,10 +103,13 @@ jobs:
         # docker-android uses /home/androidusr as user home
         # Override entrypoint to skip emulator startup for build-only
         # Mount Gradle cache from GitHub Actions cache (faster than Docker volumes)
+        GRADLE_CACHE_DIR="$HOME/.gradle"
+        mkdir -p "$GRADLE_CACHE_DIR"
+        
         docker run --rm \
           --entrypoint="/bin/bash" \
           -v "${{ github.workspace }}":/home/androidusr/workspace \
-          -v "${{ env.GRADLE_USER_HOME }}":/home/androidusr/.gradle \
+          -v "$GRADLE_CACHE_DIR":/home/androidusr/.gradle \
           -w /home/androidusr/workspace \
           -e VERSION_NAME="$VERSION_NAME" \
           -e VERSION_CODE="$VERSION_CODE" \
