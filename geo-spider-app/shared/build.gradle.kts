@@ -5,6 +5,12 @@ plugins {
     id("com.android.library")
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
 kotlin {
     androidTarget {
         compilations.all {
