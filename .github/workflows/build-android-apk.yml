@@ -31,17 +31,23 @@ jobs:
         distribution: 'temurin'
         cache: 'gradle'
 
-    - name: Set up Android SDK with caching
-      uses: maxim-lobanov/setup-android-tools@v1
+    - name: Cache Android SDK
+      uses: actions/cache@v4
+      id: android-sdk-cache
       with:
-        packages: |
-          cmdline-tools;latest
-          platforms;android-35
-          build-tools;35.0.0
-        cache: true
-      env:
-        ANDROID_HOME: ${{ env.ANDROID_HOME || '/usr/local/lib/android/sdk' }}
-        ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT || '/usr/local/lib/android/sdk' }}
+        path: |
+          ${{ env.ANDROID_HOME }}/platforms
+          ${{ env.ANDROID_HOME }}/build-tools
+          ${{ env.ANDROID_HOME }}/cmdline-tools
+        key: ${{ runner.os }}-android-sdk-35-${{ hashFiles('**/*.gradle*') }}
+        restore-keys: |
+          ${{ runner.os }}-android-sdk-35-
+
+    - name: Set up Android SDK
+      uses: android-actions/setup-android@v3
+      with:
+        api-level: 35
+        build-tools: 35.0.0
 
     - name: Cache Gradle dependencies
       uses: actions/cache@v4
