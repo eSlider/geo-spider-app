@@ -116,14 +116,27 @@ jobs:
         # Build APK using Gradle with performance optimizations
         # Reference: https://docs.gradle.org/current/userguide/performance.html
         echo '🔨 Building APK with Gradle (optimized for CI/CD)...'
-        ./gradlew :androidApp:assembleRelease \
+        
+        # Try with configuration cache first, fallback if not compatible
+        if ./gradlew :androidApp:assembleRelease \
           -PVERSION_NAME="$VERSION_NAME" \
           -PVERSION_CODE="$VERSION_CODE" \
           --build-cache \
           --configuration-cache \
           --parallel \
           --no-daemon \
-          --stacktrace 2>&1 | tee var/logs/build_$(date +%Y%m%d_%H%M%S).log
+          --stacktrace 2>&1 | tee var/logs/build_$(date +%Y%m%d_%H%M%S).log; then
+          echo "✅ Build succeeded with configuration cache"
+        else
+          echo "⚠️ Build with configuration cache failed, retrying without it..."
+          ./gradlew :androidApp:assembleRelease \
+            -PVERSION_NAME="$VERSION_NAME" \
+            -PVERSION_CODE="$VERSION_CODE" \
+            --build-cache \
+            --parallel \
+            --no-daemon \
+            --stacktrace 2>&1 | tee -a var/logs/build_$(date +%Y%m%d_%H%M%S).log
+        fi
         
         # Find APK file
         APK_FILE=$(find geo-spider-app/androidApp/build/outputs/apk/release -name "*.apk" | head -1)
