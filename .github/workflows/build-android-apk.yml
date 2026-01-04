@@ -49,13 +49,14 @@ jobs:
         api-level: 35
         build-tools: 35.0.0
 
-    - name: Cache Gradle dependencies
+    - name: Cache Gradle dependencies and build cache
       uses: actions/cache@v4
       id: gradle-cache
       with:
         path: |
           ~/.gradle/caches
           ~/.gradle/wrapper
+          ~/.gradle/build-cache
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
@@ -115,11 +116,15 @@ jobs:
         # Make gradlew executable
         chmod +x ./gradlew
         
-        # Build APK using Gradle directly (no Docker overhead)
-        echo '🔨 Building APK with Gradle...'
+        # Build APK using Gradle with performance optimizations
+        # Reference: https://docs.gradle.org/current/userguide/performance.html
+        echo '🔨 Building APK with Gradle (optimized for CI/CD)...'
         ./gradlew :androidApp:assembleRelease \
           -PVERSION_NAME="$VERSION_NAME" \
           -PVERSION_CODE="$VERSION_CODE" \
+          --build-cache \
+          --configuration-cache \
+          --parallel \
           --no-daemon \
           --stacktrace 2>&1 | tee var/logs/build_$(date +%Y%m%d_%H%M%S).log
         
