@@ -95,9 +95,8 @@ jobs:
         # Image contains: Android SDK, Java 17, build tools - everything pre-configured
         DOCKER_IMAGE="budtmo/docker-android:emulator_14.0"
         
-        # Pull the image with caching
-        # Docker automatically caches pulled images, but we can also use buildx for better caching
-        docker pull $DOCKER_IMAGE || docker buildx imagetools inspect $DOCKER_IMAGE || true
+        # Pull the image (Docker automatically caches pulled images)
+        docker pull $DOCKER_IMAGE
         
         # Run build inside Docker container
         # docker-android uses /home/androidusr as user home
@@ -109,7 +108,7 @@ jobs:
         docker run --rm \
           --entrypoint="/bin/bash" \
           -v "${{ github.workspace }}":/home/androidusr/workspace \
-          -v "$GRADLE_CACHE_DIR":/home/androidusr/.gradle \
+          -v "$GRADLE_CACHE_DIR":/home/androidusr/.gradle:rw \
           -w /home/androidusr/workspace \
           -e VERSION_NAME="$VERSION_NAME" \
           -e VERSION_CODE="$VERSION_CODE" \
