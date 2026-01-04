@@ -117,32 +117,45 @@ jobs:
             
             # Build APK - gradlew handles everything (SDK, Java, etc. are pre-configured in image)
             echo '🔨 Building APK with Gradle...'
-            ./gradlew :androidApp:assembleRelease \
+            if ./gradlew :androidApp:assembleRelease \
               -PVERSION_NAME=\"\$VERSION_NAME\" \
               -PVERSION_CODE=\"\$VERSION_CODE\" \
               --no-daemon \
-              --stacktrace || {
-                echo \"❌ Build failed with exit code: \$?\"
-                echo \"Checking for errors...\"
-                ls -la geo-spider-app/androidApp/build/outputs/ || true
-                exit 1
-              }
+              --stacktrace; then
+              echo \"✅ Gradle build completed\"
+            else
+              BUILD_EXIT=\$?
+              echo \"❌ Build failed with exit code: \$BUILD_EXIT\"
+              echo \"Checking build outputs...\"
+              find geo-spider-app/androidApp/build -name \"*.apk\" 2>/dev/null || true
+              ls -la geo-spider-app/androidApp/build/outputs/ 2>/dev/null || true
+              exit \$BUILD_EXIT
+            fi
+            
+            # Wait a moment for file system to sync
+            sleep 1
             
             # Find and copy APK to build-outputs
-            APK_FILE=\$(find geo-spider-app/androidApp/build/outputs/apk/release -name \"*.apk\" | head -1)
-            if [ -z \"\$APK_FILE\" ]; then
+            APK_FILE=\$(find geo-spider-app/androidApp/build/outputs/apk/release -name \"*.apk\" 2>/dev/null | head -1)
+            if [ -z \"\$APK_FILE\" ] || [ ! -f \"\$APK_FILE\" ]; then
               echo \"❌ APK file not found!\"
-              echo \"Checking build outputs...\"
-              ls -la geo-spider-app/androidApp/build/outputs/apk/release/ || true
+              echo \"Searching all build outputs...\"
+              find geo-spider-app/androidApp/build -name \"*.apk\" 2>/dev/null || echo \"No APK files found\"
+              ls -la geo-spider-app/androidApp/build/outputs/apk/release/ 2>/dev/null || true
               exit 1
             fi
             echo \"✅ APK file found: \$APK_FILE\"
             
             # Copy APK to build-outputs
             APK_NAME=\$(basename \"\$APK_FILE\")
-            cp \"\$APK_FILE\" /home/androidusr/workspace/build-outputs/\$APK_NAME
-            echo \"APK size: \$(du -h \"\$APK_FILE\" | cut -f1)\"
-            echo \"\$APK_NAME\" > /home/androidusr/workspace/build-outputs/apk-name.txt
+            if cp \"\$APK_FILE\" /home/androidusr/workspace/build-outputs/\$APK_NAME; then
+              echo \"✅ APK copied to build-outputs\"
+              echo \"APK size: \$(du -h \"\$APK_FILE\" | cut -f1)\"
+              echo \"\$APK_NAME\" > /home/androidusr/workspace/build-outputs/apk-name.txt
+            else
+              echo \"❌ Failed to copy APK\"
+              exit 1
+            fi
           "
         
         # Extract APK name and construct full path
