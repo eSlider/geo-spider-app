@@ -24,6 +24,9 @@ jobs:
         fetch-depth: 0  # Fetch all history for tags
         token: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
     - name: Calculate Next Version from Git Tags
       id: version
       run: |
@@ -75,28 +78,29 @@ jobs:
         # Create build outputs directory
         mkdir -p build-outputs
         
-        # Create named volume for Gradle cache (if not exists)
-        docker volume create geospider-gradle-cache || true
-        
         # Use pre-built Android SDK image from MobileDevOps
         # Image contains: Android SDK, Gradle 8.2, build tools, and platforms
         # Reference: https://github.com/MobileDevOps/android-sdk-image
         DOCKER_IMAGE="mobiledevops/android-sdk-image:34.0.0"
         
         # Pull the image (with caching)
-        docker pull $DOCKER_IMAGE || true
+        docker pull $DOCKER_IMAGE
         
         # Install additional SDK components if needed (API 35, build-tools 35.0.0)
         # Run build inside Docker container
         docker run --rm \
           -v "${{ github.workspace }}":/app \
-          -v geospider-gradle-cache:/home/mobiledevops/.gradle \
+          -v gradle-cache:/home/mobiledevops/.gradle \
           -w /app \
           -e VERSION_NAME="$VERSION_NAME" \
           -e VERSION_CODE="$VERSION_CODE" \
           -e CI=true \
           $DOCKER_IMAGE \
           bash -c "
+            # Ensure directories exist and are writable
+            mkdir -p /app/build-outputs /app/var/logs
+            chmod -R 777 /app/build-outputs /app/var/logs || true
+            
             # Accept Android SDK licenses
             yes | \$ANDROID_HOME/cmdline-tools/bin/sdkmanager --sdk_root=\$ANDROID_HOME --licenses || true
             
