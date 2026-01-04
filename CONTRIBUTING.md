@@ -258,12 +258,12 @@ For local builds, you can:
 
 ### Before Submitting
 
-- [ ] All tests pass
-- [ ] Code follows project style guidelines
-- [ ] Documentation is updated (if needed)
-- [ ] No build warnings or errors
-- [ ] Commit messages follow guidelines
-- [ ] Changes are focused and minimal
+- All tests pass
+- Code follows project style guidelines
+- Documentation is updated (if needed)
+- No build warnings or errors
+- Commit messages follow guidelines
+- Changes are focused and minimal
 
 ## Pull Request Process
 
@@ -393,5 +393,5 @@ By contributing, you agree that your contributions will be licensed under the MI
 
 ---
 
-Thank you for contributing to Geo Spider App! 🕷️
+Thank you for contributing to Geo Spider App!
 

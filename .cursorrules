@@ -84,7 +84,18 @@ docs/                          # Documentation
 - Build script: `./bin/build-apk.sh`
 - CI/CD: GitHub Actions (`.github/workflows/build-android-apk.yml`)
 
-## Git Workflow
+## Development Workflow
+
+Follow this workflow for all changes:
+
+1. **TDD (Test-Driven Development)**: Write tests first, then implement
+2. **Commit**: Commit changes with meaningful messages following conventional commits
+3. **Push**: Push to your branch/remote
+4. **Monitor Pipeline**: Monitor CI/CD pipeline status using `./bin/monitor-workflow.sh` or GitHub Actions
+5. **Fix**: If pipeline fails, fix issues and repeat from step 1
+6. **Done**: Once pipeline passes, changes are ready for review/merge
+
+### Git Workflow
 - Use meaningful commit messages
 - Follow conventional commits when possible
 - Never commit:
@@ -147,4 +158,5 @@ docs/                          # Documentation
 - Batch location updates when possible
 - Use appropriate update intervals
 - Cache location data locally before syncing
+
 

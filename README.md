@@ -12,14 +12,14 @@ A sophisticated GPS/GLONASS location tracking Android application built with Kot
 ## Project Status
 
 ### Current Implementation
-- ✅ Kotlin Multiplatform project structure
-- ✅ Android app with Jetpack Compose UI
-- ✅ Shared common code for business logic
-- ✅ Location data models and services
-- ✅ Modern Material Design 3 UI
-- ✅ Automated CI/CD with GitHub Actions
-- ✅ Semantic versioning and automated releases
-- ✅ Build logging and artifact management
+- Kotlin Multiplatform project structure
+- Android app with Jetpack Compose UI
+- Shared common code for business logic
+- Location data models and services
+- Modern Material Design 3 UI
+- Automated CI/CD with GitHub Actions
+- Semantic versioning and automated releases
+- Build logging and artifact management
 
 ### Architecture
 
@@ -150,10 +150,10 @@ Or pass it directly to Gradle:
 ### Automated Releases
 
 On successful builds to the `main` branch:
-- ✅ Git tag is created: `v{VERSION_NAME}`
-- ✅ GitHub release is created with the APK attached
-- ✅ Build logs are uploaded as artifacts
-- ✅ Release notes are automatically generated
+- Git tag is created: `v{VERSION_NAME}`
+- GitHub release is created with the APK attached
+- Build logs are uploaded as artifacts
+- Release notes are automatically generated
 
 ## CI/CD
 
@@ -273,18 +273,9 @@ Configuration is currently hardcoded in the app. Future versions will support:
 
 ## Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on how to contribute to this project, including development setup, coding standards, and pull request process.
 
-**Quick start:**
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes following the [coding guidelines](.cursorrules)
-4. Write tests for new features
-5. Submit a pull request
-
-For detailed contribution guidelines, including development setup, coding standards, and pull request process, see [CONTRIBUTING.md](CONTRIBUTING.md).
-
-**Code of Conduct**: Please review our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
+Please review our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
 
 ## License
 
