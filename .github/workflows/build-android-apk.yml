@@ -85,7 +85,7 @@ jobs:
         echo "version-tag=v$VERSION_NAME" >> $GITHUB_OUTPUT
         echo "✅ Next version: $VERSION_NAME (code: $VERSION_CODE)"
 
-    - name: Build APK using Docker
+    - name: Build APK
       id: build-apk
       env:
         VERSION_NAME: ${{ steps.version.outputs.version-name }}
@@ -95,91 +95,37 @@ jobs:
         
         # Create build outputs directory
         mkdir -p build-outputs
+        mkdir -p var/logs
         
-        # Use docker-android image from budtmo
-        # Reference: https://github.com/budtmo/docker-android
-        # Image contains: Android SDK, Java 17, build tools - everything pre-configured
-        DOCKER_IMAGE="budtmo/docker-android:emulator_14.0"
+        # Make gradlew executable
+        chmod +x ./gradlew
         
-        # Pull the image (Docker automatically caches pulled images)
-        docker pull $DOCKER_IMAGE
+        # Build APK using Gradle directly (no Docker overhead)
+        echo '🔨 Building APK with Gradle...'
+        ./gradlew :androidApp:assembleRelease \
+          -PVERSION_NAME="$VERSION_NAME" \
+          -PVERSION_CODE="$VERSION_CODE" \
+          --no-daemon \
+          --stacktrace 2>&1 | tee var/logs/build_$(date +%Y%m%d_%H%M%S).log
         
-        # Run build inside Docker container
-        # docker-android uses /home/androidusr as user home
-        # Override entrypoint to skip emulator startup for build-only
-        # Mount Gradle cache from GitHub Actions cache (faster than Docker volumes)
-        GRADLE_CACHE_DIR="$HOME/.gradle"
-        mkdir -p "$GRADLE_CACHE_DIR"
-        
-        # Create a build script inside the container to avoid shell escaping issues
-        docker run --rm \
-          --entrypoint="/bin/bash" \
-          -v "${{ github.workspace }}":/home/androidusr/workspace \
-          -v "$GRADLE_CACHE_DIR":/home/androidusr/.gradle \
-          -w /home/androidusr/workspace \
-          -e VERSION_NAME="$VERSION_NAME" \
-          -e VERSION_CODE="$VERSION_CODE" \
-          -e CI=true \
-          $DOCKER_IMAGE \
-          -c "
-            set -x
-            # Debug: Show environment
-            echo '📋 Environment:'
-            whoami
-            pwd
-            java -version 2>&1 | head -1
-            echo \"ANDROID_HOME: \${ANDROID_HOME:-NOT SET}\"
-            echo \"ANDROID_SDK_ROOT: \${ANDROID_SDK_ROOT:-NOT SET}\"
-            test -f ./gradlew && echo 'Gradlew: YES' || echo 'Gradlew: NO'
-            ls -ld /home/androidusr/.gradle 2>/dev/null || echo 'Gradle cache: NOT ACCESSIBLE'
-            echo ''
-            
-            # Make gradlew executable
-            chmod +x ./gradlew
-            
-            # Ensure build outputs directory exists
-            mkdir -p /home/androidusr/workspace/build-outputs
-            mkdir -p /home/androidusr/workspace/var/logs
-            
-            # Build APK - use gradlew which handles everything
-            echo '🔨 Building APK with Gradle...'
-            ./gradlew :androidApp:assembleRelease \
-              -PVERSION_NAME=\"\$VERSION_NAME\" \
-              -PVERSION_CODE=\"\$VERSION_CODE\" \
-              --no-daemon \
-              --stacktrace
-            echo '✅ Gradle build succeeded'
-            
-            # Find APK file
-            APK_FILE=\$(find geo-spider-app/androidApp/build/outputs/apk/release -name \"*.apk\" | head -1)
-            if [ -z \"\$APK_FILE\" ] || [ ! -f \"\$APK_FILE\" ]; then
-              echo '❌ APK file not found!'
-              echo 'Checking build outputs...'
-              find geo-spider-app/androidApp/build -name \"*.apk\" 2>/dev/null || echo \"No APK files found\"
-              ls -la geo-spider-app/androidApp/build/outputs/apk/release/ 2>/dev/null || true
-              exit 1
-            fi
-            
-            # Copy APK to build-outputs
-            APK_NAME=\$(basename \"\$APK_FILE\")
-            cp \"\$APK_FILE\" /home/androidusr/workspace/build-outputs/\$APK_NAME
-            echo \"\$APK_NAME\" > /home/androidusr/workspace/build-outputs/apk-name.txt
-            echo \"✅ APK built: \$APK_FILE\"
-            echo \"📦 APK size: \$(du -h \"\$APK_FILE\" | cut -f1)\"
-          "
-        
-        # Extract APK name and construct full path
-        APK_NAME=$(cat build-outputs/apk-name.txt)
-        APK_FILE="build-outputs/$APK_NAME"
-        
-        if [ ! -f "$APK_FILE" ]; then
-          echo "❌ APK file not found after build: $APK_FILE"
-          ls -la build-outputs/ || true
+        # Find APK file
+        APK_FILE=$(find geo-spider-app/androidApp/build/outputs/apk/release -name "*.apk" | head -1)
+        if [ -z "$APK_FILE" ] || [ ! -f "$APK_FILE" ]; then
+          echo '❌ APK file not found!'
+          echo 'Checking build outputs...'
+          find geo-spider-app/androidApp/build -name "*.apk" 2>/dev/null || echo "No APK files found"
+          ls -la geo-spider-app/androidApp/build/outputs/apk/release/ 2>/dev/null || true
           exit 1
         fi
         
-        echo "✅ APK built successfully: $APK_FILE"
-        echo "apk-path=$APK_FILE" >> $GITHUB_OUTPUT
+        # Copy APK to build-outputs
+        APK_NAME=$(basename "$APK_FILE")
+        cp "$APK_FILE" build-outputs/$APK_NAME
+        echo "$APK_NAME" > build-outputs/apk-name.txt
+        echo "✅ APK built: $APK_FILE"
+        echo "📦 APK size: $(du -h "$APK_FILE" | cut -f1)"
+        
+        echo "apk-path=build-outputs/$APK_NAME" >> $GITHUB_OUTPUT
 
     - name: Upload build logs
       if: always()
