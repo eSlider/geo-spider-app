@@ -58,6 +58,13 @@ docs/                          # Documentation
 
 ## Prerequisites
 
+### Option 1: Docker (Recommended for CI/CD and Consistent Builds)
+
+- **Docker**: 20.10+ (for containerized builds)
+- **Docker Compose**: 2.0+ (optional, for local development)
+
+### Option 2: Local Development Environment
+
 - **Android Studio**: Hedgehog (2023.1.1) or later
 - **JDK**: 17 or later
 - **Android SDK**: API level 21+ (Android 5.0+)
@@ -65,7 +72,37 @@ docs/                          # Documentation
 
 ## Building
 
-### Build APK (Recommended)
+### Build APK with Docker (Recommended)
+
+Use Docker for consistent, reproducible builds:
+
+```bash
+./bin/build-docker.sh
+```
+
+This script uses the pre-built [mobiledevops/android-sdk-image](https://github.com/MobileDevOps/android-sdk-image) Docker image which contains:
+- Android SDK with command-line tools
+- Gradle 8.2
+- Android SDK platforms and build tools
+- All necessary dependencies
+
+The script will:
+- Pull the pre-built Docker image (cached after first use)
+- Accept Android SDK licenses automatically
+- Install additional SDK components if needed (API 35, build-tools 35.0.0)
+- Build the release APK inside the container
+- Save build logs to `var/logs/`
+- Copy APK to `build-outputs/` directory
+- Display APK information
+
+**Benefits of Docker builds:**
+- Consistent build environment across all machines
+- No need to install Android SDK locally
+- Isolated build environment
+- Faster CI/CD pipelines (uses pre-built image)
+- Well-maintained and tested Docker image
+
+### Build APK Locally (Without Docker)
 
 Use the build script which handles prerequisites, logging, and versioning:
 
@@ -100,6 +137,21 @@ The APK will be generated at:
 
 ```bash
 ./gradlew :androidApp:installDebug
+```
+
+### Docker Compose (Alternative)
+
+For interactive development with Docker:
+
+```bash
+# Start container
+docker-compose up -d
+
+# Execute commands inside container
+docker-compose exec android-builder ./gradlew :androidApp:assembleRelease
+
+# Stop container
+docker-compose down
 ```
 
 ## Version Management
@@ -157,9 +209,9 @@ On successful builds to the `main` branch:
 
 ## CI/CD
 
-### GitHub Actions
+### GitHub Actions with Docker
 
-The project uses GitHub Actions for automated builds and releases.
+The project uses GitHub Actions with Docker for automated builds and releases.
 
 **Workflow**: `.github/workflows/build-android-apk.yml`
 
@@ -169,14 +221,21 @@ The project uses GitHub Actions for automated builds and releases.
 - Manual workflow dispatch
 
 **What it does**:
-1. Sets up JDK 17 and Android SDK (with caching for faster builds)
-2. Caches Gradle dependencies and Android SDK components
-3. Calculates next version from git tags
-4. Builds the release APK with calculated version
-5. Uploads build logs (7 days retention)
-6. Uploads APK artifact (30 days retention)
-7. Creates git tag (main branch only)
-8. Creates GitHub release (main branch only)
+1. Builds Docker image with Android SDK and build tools (cached for faster builds)
+2. Calculates next version from git tags
+3. Builds the release APK inside Docker container with calculated version
+4. Uploads build logs (7 days retention)
+5. Uploads APK artifact (30 days retention)
+6. Creates git tag (main branch only)
+7. Creates GitHub release (main branch only)
+
+**Docker-based CI/CD Benefits**:
+- Consistent build environment across all runs
+- Faster builds using pre-built [mobiledevops/android-sdk-image](https://github.com/MobileDevOps/android-sdk-image)
+- Isolated build environment
+- Easy to reproduce builds locally
+- No need to manage Android SDK versions in CI
+- Well-maintained Docker image with regular updates
 
 ### Monitoring Workflows
 
@@ -250,6 +309,11 @@ Configuration is currently hardcoded in the app. Future versions will support:
 
 ### Building Locally
 
+**With Docker (Recommended):**
+1. Ensure Docker is installed and running
+2. Build: `./bin/build-docker.sh`
+
+**Without Docker:**
 1. Ensure prerequisites are met (see Prerequisites section)
 2. Set up Android SDK (set `ANDROID_HOME` or create `local.properties`)
 3. Accept Android SDK licenses: `./bin/accept-android-licenses.sh`

@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  android-builder:
+    # Use pre-built Android SDK image from MobileDevOps
+    # Reference: https://github.com/MobileDevOps/android-sdk-image
+    image: mobiledevops/android-sdk-image:34.0.0
+    container_name: geospider-builder
+    volumes:
+      # Mount project directory
+      - .:/app
+      # Persist Gradle cache
+      - gradle-cache:/home/mobiledevops/.gradle
+      # Mount build outputs
+      - ./build-outputs:/app/build-outputs
+    environment:
+      - ANDROID_HOME=/opt/android-sdk
+      - ANDROID_SDK_ROOT=/opt/android-sdk
+      - GRADLE_USER_HOME=/home/mobiledevops/.gradle
+      - CI=false
+    working_dir: /app
+    # Override default command to keep container running
+    command: tail -f /dev/null
+
+volumes:
+  gradle-cache:
+    driver: local
+

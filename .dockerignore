@@ -1,0 +1,41 @@
+# Build outputs
+build/
+.gradle/
+*.apk
+*.aab
+*.dex
+*.class
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+
+# Logs
+var/logs/
+*.log
+
+# Git
+.git/
+.gitignore
+
+# Local properties
+local.properties
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# CI/CD
+.github/
+
+# Documentation (optional, keep if needed)
+# docs/
+
